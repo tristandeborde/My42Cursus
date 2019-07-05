@@ -1,0 +1,25 @@
+*~
+*sh
+*py
+*.a
+*ut
+*.o
+*/*.o
+main*
+checker
+checke2r
+push_swap
+# Swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-v][a-z]
+[._]sw[a-p]
+
+# Session
+Session.vim
+
+# Temporary
+.netrwhist
+*~
+# Auto-generated tag files
+tags
