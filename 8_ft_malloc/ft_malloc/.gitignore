@@ -1,0 +1,9 @@
+*.o
+script
+*.so
+*~
+fuzz.c
+*.swp
+a.out
+*.log
+test*
