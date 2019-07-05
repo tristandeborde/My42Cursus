@@ -1,10 +1,10 @@
 # PRINTF
 
-**Project Objectives :** Parsing, variadic functions
+**Learning goals :** Typing & casts, parsing & variadic functions
 
 ## Intro
 
-Discover variadic functions and code optimization with printf function.
+Discover variadic functions and type casting with printf function.
 
 ### Prototype
 
