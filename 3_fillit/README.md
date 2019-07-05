@@ -1,7 +1,7 @@
 
 # FILLIT
 
-**Project Objectives :** Basic algorithm, input/outputs
+**Project Objectives :** Basic algorithms and parsing
 
 ## Intro
 
