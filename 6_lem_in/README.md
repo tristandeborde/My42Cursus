@@ -1,10 +1,10 @@
 # LEM_IN
 
-**Project Objectives :** Graph algorithms, Stack concept
+**Learning goals :** Graph algorithms
 
 ## Intro
 
-This project introduces you to graphing algorithms: the program will have to intelligently select the precise paths and movements that the ants must take.
+This project introduces you to graphing algorithms: the program will have to find the shortest path in a graph of nodes.
 
 ## Usage
 
