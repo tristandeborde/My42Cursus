@@ -1,11 +1,11 @@
 
 # FILLIT
 
-**Project Objectives :** Basic algorithm, input/outputs
+**Project Objectives :** Basic algorithms and parsing
 
 ## Intro
 
-Fillit is a project that allows you to discover and / or familiarize yourself with a recurrent problem in programming: the search of an optimal solution among a very large number of possibilities, within a reasonable time. In the case of this project, it will be a question of arranging Tetriminos between them and to determine the smallest possible square that can accommodate them.
+Fillit is a project about a recurring problem in programming: the search of an optimal solution among a very large number of possibilities, within a reasonable time. Here, we arrange Tetriminos between themselves to determine the smallest possible square that can accommodate them.
 
 ## Usage
 
@@ -45,10 +45,9 @@ DDD..
 
 ### Project specificities
 
-Th algorithm is a brute-force search that test all solutions and returns the first one found.
+The implemented algorithm is a brute-force search that tests all solutions and returns the first one found.
 
-For speed we used binary operations.
-Instead of using a normal double table to store information of the tetriminos positions we just used a table of long represented the tetriminos as 1 and empty space as 0.
+For speed we used binary operations: instead of using a normal double table to store the tetriminos positions, we used a table of longs. Every block in a tetrimino corresponds to a set bit in the long, and an empty space to a 0.
 
 In the case of a map of 5 by 5 we would have a `map = long[5]`
 ```
@@ -60,8 +59,6 @@ map:
 00000111 11111111 11111111 11111111 11111111 11111111 11111111 11111111
 ```
 
-This is much faster because of the speed of binary operation compared to memory access.
-
 ## Contributors
 
-@blefeuvr (Baptiste Lefeuvre) student at 42
+@pprikazs (Paul Prikazsky) student at 42

@@ -1,6 +1,6 @@
 # GET NEXT LINE
 
-**Project Objectives :** Filedescriptors, statics in C, Basic parsing 
+**Learning goals :** Filedescriptors, static variables
 
 ## The function prototype
 
