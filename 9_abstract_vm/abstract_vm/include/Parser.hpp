@@ -7,11 +7,12 @@ public:
 
 	Parser(void);
 	virtual ~Parser(void);
+	Parser & operator=(const Parser &) = delete;
+	Parser(const Parser &) = delete;
 
 private:
-	
-	Parser & operator=(const Parser &);
-	Parser(const Parser &);
+
+
 
 };
 

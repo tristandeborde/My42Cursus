@@ -6,7 +6,7 @@
 #    By: tdeborde <tdeborde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/16 16:42:31 by tdeborde          #+#    #+#              #
-#    Updated: 2019/06/11 16:46:59 by tdeborde         ###   ########.fr        #
+#    Updated: 2019/07/06 16:54:59 by tdeborde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ NAME  = avm
 CC    = clang++
 
 # Flags #
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -std=c++11 -Wall -Wextra -Werror
 
 # Sources #
 SRC_NAME	= 	main.cpp \
@@ -25,7 +25,8 @@ SRC_NAME	= 	main.cpp \
 				Lexer.cpp \
 				Parser.cpp \
 				Token.cpp \
-				Instruction.cpp
+				Instruction.cpp \
+				LexerExceptions.cpp
 
 SRC = $(addprefix src/,$(SRC_NAME))
 

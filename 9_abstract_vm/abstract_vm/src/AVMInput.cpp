@@ -20,7 +20,7 @@ void		AVMInput::readStd(void)
 	std::string 		line;
 	std::stringstream	stream;
 
-	while (std::getline(std::cin, line) != 0)
+	while (std::getline(std::cin, line))
 	{
 		stream << line << std::endl;
 		if (!line.compare(";;"))

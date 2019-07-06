@@ -1,23 +1,24 @@
 #ifndef TOKEN_HPP
 # define TOKEN_HPP
 
-# include "Lexer.hpp"
+# include "TokenType.hpp"
+# include <string>
 
 class Token {
 
 public:
 	virtual ~Token(void);
-	Token(std::string token, Lexer::TokenType id, int line_nb, std::string value);
+	Token(std::string token, TokenType id, int line_nb, std::string value);
+	Token(const Token &);
 
-	Lexer::TokenType getType();
+	TokenType getType();
 
 private:
 	Token & operator=(const Token &);
-	Token(const Token &);
-	std::string 		p_token;
-	std::string 		p_value;
-	Lexer::TokenType 	p_type;
-	int 				p_line_nb;
+	std::string 	p_token;
+	TokenType 		p_type;
+	int 			p_line_nb;
+	std::string 	p_value;
 
 };
 

@@ -4,8 +4,10 @@
 class Instruction {
 
 public:
-
+	Instruction(void);
 	virtual ~Instruction(void);
+	Instruction(const Instruction &) = delete;
+	Instruction & operator=(const Instruction &) = delete;
 
 private:
 

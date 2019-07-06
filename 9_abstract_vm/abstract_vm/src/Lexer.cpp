@@ -1,22 +1,24 @@
 #include "Lexer.hpp"
 
 Lexer::Lexer(void) {
-	this->p_authorized_instr["exit"] = exit;
-	this->p_authorized_instr["dump"] = dump;
-	this->p_authorized_instr["push"] = push;
-	this->p_authorized_instr["pop"] = pop;
-	this->p_authorized_instr["assert"] = assert;
-	this->p_authorized_instr["add"] = add;
-	this->p_authorized_instr["sub"] = sub;
-	this->p_authorized_instr["mul"] = mul;
-	this->p_authorized_instr["div"] = div;
-	this->p_authorized_instr["mod"] = mod;
-	this->p_authorized_instr["print"] = print;
-	this->p_authorized_var["var_int8"] = int8;
-	this->p_authorized_var["var_int16"] = int16;
-	this->p_authorized_var["var_int32"] = int32;
-	this->p_authorized_var["var_float"] = flt;
-	this->p_authorized_var["var_double"] = dbl;
+	map_init(this->p_authorized_tokens)
+		("exit", TokenType::exit)
+		("dump", TokenType::dump)
+		("push", TokenType::push)
+		("pop", TokenType::pop)
+		("assert", TokenType::assert)
+		("add", TokenType::add)
+		("sub", TokenType::sub)
+		("mul", TokenType::mul)
+		("div", TokenType::div)
+		("mod", TokenType::mod)
+		("print", TokenType::print)
+		("var_int8", TokenType::int8)
+		("var_int16", TokenType::int16)
+		("var_int32", TokenType::int32)
+		("var_float", TokenType::flt)
+		("var_double", TokenType::dbl)
+	;
 	return;
 }
 
@@ -24,95 +26,115 @@ Lexer::~Lexer(void) {
 	return;
 }
 
-const char* Lexer::badSyntaxException::what(int line_nb) const throw()
+void		Lexer::checkTokens()
 {
-	std::string statement = "Line ";
-	statement += std::to_string(line_nb);
-	statement += "Syntax error, no match found for expression.";
-	return statement;
+	/*
+	 	For token in this->p_tokens:
+	 		try checkToken():
+				if token->type >= badsyntax;
+       		catch LexerException
+				cout << e.what() << endl;
+	*/
 }
 
-const char* Lexer::missingParenthesisException::what(int line_nb) const throw()
+TokenType	Lexer::findTokenType(const std::string &token_string)
 {
-	std::string statement = "Line ";
-	statement += std::to_string(line_nb);
-	statement += "Syntax error, missing parenthesis after value call.";
-	return statement;
-}
+	std::map<std::string, TokenType>::iterator 	found_token;
 
-Lexer::TokenType	Lexer::findTokenType(const std::string &identifier, int TokenType)
-{
-	Token::Token 							*token;
-	std::map<std::string, Lexer::TokenType> *map;
-
-	map = TokenType ? &this->p_authorized_instr : &this->p_authorized_var;
-	found_token = map.find(identifier);
-	if(found_token != map.end())
+	found_token = this->p_authorized_tokens.find(token_string);
+	if(found_token != this->p_authorized_tokens.end())
 		return found_token->second;
 	else
-		return TokenType::error;
+		return TokenType::badsyntax;
 }
 
-void 	Lexer::handleVar(const std::string &identifier, size_t fst_par, int line_nb)
+void 	Lexer::handleVar(const std::string &token_string, size_t fst_par, int line_nb)
 {
 	TokenType		type;
 	std::string		value;
-	std::string		token;
+	std::string		var_type;
 	size_t			snd_par;
 
-	token = identifier.substr(0, fst_par - 1);
-	type = this->findTokenType(token, 0);
-	if ((snd_par = identifier.find(')', fst_par)) != std::string::npos
-		&& snd_par == identifier.end() - 1 && type != TokenType::error)
+	var_type = token_string.substr(0, fst_par - 1);
+	type = this->findTokenType(var_type);
+	// Check the validity of the variable type
+	if (type == TokenType::badsyntax)
 	{
-		value = identifier.substr(fst_par + 1, snd_par - 1);
-		this->p_tokens.push_back(new Token::Token(token, type, line_nb, value));
+		const Token token(token_string, type, line_nb, "");
+		this->p_tokens.push_back(token);
+	}
+	else if ((snd_par = token_string.find(')', fst_par)) == std::string::npos)
+	{
+		// Check if a second parenthesis is present
+		const Token token(token_string, TokenType::missingpar, line_nb, "");
+		this->p_tokens.push_back(token);
 	}
 	else
 	{
-		type = TokenType::error;
-		this->p_errors.push_back(new Token::Token(identifier, type, line_nb, ""));
-	}
-}
-
-void	Lexer::findToken(const std::string &identifier, int line_nb)
-{
-	Token::Token	*token;
-	TokenType		type;
-	size_t			fst_par;
-
-	if ((fst_par = identifier.find('(')))
-		this->handleVar(identifier, fst_par, line_nb);
-	else
-	{
-		type = this->findTokenType(identifier, 1);
-		if (type == Type::int8 || type == Type::int16
-			|| type == Type::int32 || type == Type::float)
-			type = TokenType::error;
-		token = new Token::Token(identifier, type, line_nb, "");
+		// Success: variable type and parenthesis are OK
+		value = token_string.substr(fst_par + 1, snd_par - 1);
+		const Token token(var_type, type, line_nb, value);
 		this->p_tokens.push_back(token);
 	}
 }
 
-void	Lexer::readLine(const std::string &line)
+void 	Lexer::handleInstr(const std::string &token_string, int line_nb)
 {
-	int i;
-	int inst_count;
-	int start;
+	TokenType 		type;
+
+	type = this->findTokenType(token_string);
+	// Check if token is an instruction and not a variable type
+	if (type > TokenType::print)
+		type = TokenType::isolatedvar;
+	const Token token(token_string, type, line_nb, "");
+	this->p_tokens.push_back(token);
+}
+
+void	Lexer::findToken(const std::string &token_string, int line_nb)
+{
+	size_t			fst_par;
+
+	if ((fst_par = token_string.find('(')))
+		this->handleVar(token_string, fst_par, line_nb);
+	else
+		this->handleInstr(token_string, line_nb);
+}
+
+void	Lexer::readLine(const std::string &line, int line_nb)
+{
+	size_t 	i;
+	int 	inst_count;
+	int 	start;
 
 	i = 0;
 	inst_count = 0;
+	// Do not read a comment line
 	if (line[i] == ';')
 		return;
+	// Read every token in a line
 	while (i < line.size())
 	{
 		start = i;
 		while (i < line.size() && isalnum(line[i]))
 			i++;
-		string identifier = line.substr(start, i - start);
-		this->findToken(identifier);
+		std::string token_string = line.substr(start, i - start);
+		this->findToken(token_string, line_nb);
 		while (i < line.size() && !isalnum(line[i]))
 			i++;
 		inst_count++;
+	}
+}
+
+void Lexer::readLines(const std::string &lines)
+{
+	std::string 		result;
+	std::istringstream 	iss(lines);
+	size_t 				line_nb;
+
+	line_nb = 0;
+	for (std::string line; std::getline(iss, line); )
+	{
+	    this->readLine(line, line_nb);
+		line_nb++;
 	}
 }
