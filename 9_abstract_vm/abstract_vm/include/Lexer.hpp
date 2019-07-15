@@ -1,17 +1,17 @@
 #ifndef LEXER_HPP
 # define LEXER_HPP
 
-# include <map>
 # include <vector>
 # include <string>
+# include <regex>
 # include <sstream>
+# include <iostream>
 # include "TokenType.hpp"
 # include "Token.hpp"
-# include "LexerExceptions.hpp"
+# include "Exceptions.hpp"
 # include "MapHelper.hpp"
 
-// Performs a lexical analysis of the provided code.
-
+// Performs a lexical analysis of the provided code sample
 
 class Lexer {
 
@@ -22,18 +22,19 @@ public:
 	Lexer(const Lexer &) = delete;
 	Lexer & operator=(const Lexer &) = delete;
 
-	void		checkTokens(void);
-	TokenType	findTokenType(const std::string &identifier);
-	void 		handleVar(const std::string &identifier, size_t fst_par, int line_nb);
-    void 		handleInstr(const std::string &identifier, int line_nb);
-	void		findToken(const std::string &identifier, int line_nb);
-	void		readLine(const std::string &line, int line_nb);
-	void 		readLines(const std::string &lines);
+	TokenType					findTokenType(const std::string &identifier);
+    Token 						checkToken(const std::string &identifier, int line_nb);
+	void						pushToken(const std::string &identifier, int line_nb);
+	void						readLine(const std::string &line, int line_nb);
+	void 						lex(const std::string &lines);
+	std::vector<std::string>	getExceptions(void);
+	std::vector<Token::Token>   getTokens(void);
 
 private:
 
-    std::map<std::string, TokenType> 		p_authorized_tokens;
-    std::vector<Token::Token>               p_tokens;
+	std::vector<std::pair<std::regex, TokenType>> 	p_valid_tokens;
+	std::vector<std::string>						p_exceptions;
+    std::vector<Token::Token>           			p_tokens;
 };
 
 #endif

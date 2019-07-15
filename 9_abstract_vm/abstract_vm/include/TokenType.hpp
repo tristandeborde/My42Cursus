@@ -18,9 +18,8 @@ enum class TokenType {
     int32,
     flt,
     dbl,
-    badsyntax,
-    missingpar,
-    isolatedvar
+    endl,
+    badsyntax
 };
 
 #endif
