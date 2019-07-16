@@ -11,7 +11,7 @@
 # include "Exceptions.hpp"
 # include "MapHelper.hpp"
 
-// Performs a lexical analysis of the provided code sample
+// Separates the input text into a vector of tokens and checks their validity.
 
 class Lexer {
 

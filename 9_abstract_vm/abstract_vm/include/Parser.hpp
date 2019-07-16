@@ -10,7 +10,7 @@
 # include "TokenType.hpp"
 # include "Exceptions.hpp"
 
-// Provides a grammatical analysis of a sequence of tokens
+// Parses a sequence of tokens to check for inconstencies.
 
 class Parser {
 

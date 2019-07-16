@@ -6,7 +6,7 @@
 #    By: tdeborde <tdeborde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/16 16:42:31 by tdeborde          #+#    #+#              #
-#    Updated: 2019/07/15 14:08:16 by tdeborde         ###   ########.fr        #
+#    Updated: 2019/07/16 14:10:29 by tdeborde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,15 @@ CC    = clang++
 FLAGS = -std=c++11 -Wall -Wextra -Werror
 
 # Sources #
-SRC_NAME	= 	main.cpp \
-				AVMInput.cpp \
+SRC_NAME	= 	AVMInput.cpp \
+				Exceptions.cpp \
+				Instruction.cpp \
+				OperandFactory.cpp \
 				Lexer.cpp \
+				main.cpp \
 				Parser.cpp \
 				Token.cpp \
-				Instruction.cpp \
-				Exceptions.cpp
+
 
 SRC = $(addprefix src/,$(SRC_NAME))
 
