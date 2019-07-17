@@ -1,8 +1,8 @@
 #ifndef OPERANDFACTORY_HPP
 # define OPERANDFACTORY_HPP
 
-# include "Operand.tpp"
-# include "IOperand.hpp"
+# include "Operands/Operand.tpp"
+# include "Operands/IOperand.hpp"
 
 class OperandFactory {
     public:
@@ -21,7 +21,6 @@ class OperandFactory {
         IOperand const* createFloat( std::string const& value ) const;
         IOperand const* createDouble( std::string const& value ) const;
 
-        //static IOperand const*(OperandFactory::* p_builders[static_cast<int>(eOperandType::COUNT)])(std::string const &value) const;
         static t_builder p_builders[static_cast<int>(eOperandType::COUNT)];
 };
 

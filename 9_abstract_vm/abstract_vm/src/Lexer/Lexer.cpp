@@ -89,12 +89,12 @@ void Lexer::lex(const std::string &lines)
 		this->readLine(line, line_nb);
 }
 
-std::vector<std::string>		Lexer::getExceptions(void)
+std::vector<std::string>		Lexer::getExceptions(void) const
 {
 	return this->p_exceptions;
 }
 
-std::vector<Token::Token>       Lexer::getTokens(void)
+std::vector<Token::Token>       Lexer::getTokens(void) const
 {
 	return this->p_tokens;
 }

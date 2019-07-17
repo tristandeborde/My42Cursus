@@ -19,7 +19,9 @@ enum class TokenType {
     flt,
     dbl,
     endl,
-    badsyntax
+    badsyntax,
+    COUNT
 };
+
 
 #endif

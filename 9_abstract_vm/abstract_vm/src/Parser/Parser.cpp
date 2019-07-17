@@ -1,6 +1,6 @@
-#include "Parser.hpp"
+#include "Parser/Parser.hpp"
 
-Parser::Parser(Lexer &src)
+Parser::Parser(const Lexer &src)
 	: p_tokens(src.getTokens()), p_exceptions(src.getExceptions()) {
 	return;
 }
@@ -16,12 +16,6 @@ void	Parser::printExceptions(const std::vector<std::string> &exceptions)
 	throw (GenericException::GenericException());
 }
 
-bool 	Parser::overflowCheck(const std::string &nb)
-{
-	(void) nb;
-	return true;
-}
-
 bool 	Parser::isValidNumber(std::string token_str)
 {
 	if (std::regex_search(token_str, std::regex("\\(\\d*\\.?\\d*\\)")))
@@ -33,6 +27,9 @@ void 	Parser::checkToken(t_tokens_it it, t_tokens_it end)
 {
 	t_tokens_it next = it + 1;
 	TokenType type = (*it).getType();
+
+	// TODO: Change ugly if forest into sequence parsing:
+	// 		check vector<string s> Tokens against vector<vector<string s>> Valid_Sequences
 
 	// IF INSTR == (Push || Assert) : Look ahead to check if next is number
 	if (type == TokenType::push || type == TokenType::assert) {
@@ -55,11 +52,23 @@ void 	Parser::checkToken(t_tokens_it it, t_tokens_it end)
 	}
 }
 
-void 	Parser::parse()
+void 	Parser::addInstruction(t_tokens_it it)
+{
+	// Check if token is an instruction (not an Operand, not an error)
+	TokenType type = (*it).getType();
+	if (type > TokenType::print)
+		return ;
+
+	IInstruction const *instru = this->p_factory.createInstruction(type);
+	this->p_instructions.push_back(instru);
+}
+
+void 	Parser::parse(void)
 {
 	for (t_tokens_it it = this->p_tokens.begin(); it != this->p_tokens.end(); it++) {
 		try {
 			this->checkToken(it, this->p_tokens.end());
+			this->addInstruction(it);
 		}
 		catch (ParserException &e) {
 			this->p_exceptions.push_back(e.what());

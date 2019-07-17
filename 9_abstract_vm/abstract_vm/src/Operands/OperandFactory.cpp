@@ -1,4 +1,4 @@
-#include "OperandFactory.hpp"
+#include "Operands/OperandFactory.hpp"
 
 OperandFactory::OperandFactory(void) {
     return;
@@ -38,7 +38,7 @@ IOperand const* OperandFactory::createDouble( std::string const& value ) const {
     return ope;
 }
 
-IOperand const*OperandFactory::createOperand( eOperandType type, std::string const& value ) const {
+IOperand const*OperandFactory::createOperand( eOperandType const type, std::string const& value ) const {
     t_builder p_builders[static_cast<int>(eOperandType::COUNT)] =
         {
             &OperandFactory::createInt8,

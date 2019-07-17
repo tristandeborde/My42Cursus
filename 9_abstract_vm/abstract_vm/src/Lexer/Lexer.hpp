@@ -6,19 +6,18 @@
 # include <regex>
 # include <sstream>
 # include <iostream>
-# include "TokenType.hpp"
-# include "Token.hpp"
-# include "Exceptions.hpp"
-# include "MapHelper.hpp"
+# include "Lexer/TokenType.hpp"
+# include "Lexer/Token.hpp"
+# include "Exceptions/Exceptions.hpp"
 
-// Separates the input text into a vector of tokens and checks their validity.
+// Converts the input text into a vector of Token objects if they are valid.
 
 class Lexer {
 
 public:
 
 	Lexer(void);
-	virtual ~Lexer(void);
+	~Lexer(void);
 	Lexer(const Lexer &) = delete;
 	Lexer & operator=(const Lexer &) = delete;
 
@@ -27,8 +26,8 @@ public:
 	void						pushToken(const std::string &identifier, int line_nb);
 	void						readLine(const std::string &line, int line_nb);
 	void 						lex(const std::string &lines);
-	std::vector<std::string>	getExceptions(void);
-	std::vector<Token::Token>   getTokens(void);
+	std::vector<std::string>	getExceptions(void) const;
+	std::vector<Token::Token>   getTokens(void) const;
 
 private:
 
