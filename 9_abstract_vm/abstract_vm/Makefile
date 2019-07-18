@@ -6,7 +6,7 @@
 #    By: tdeborde <tdeborde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/16 16:42:31 by tdeborde          #+#    #+#              #
-#    Updated: 2019/07/18 15:20:17 by tdeborde         ###   ########.fr        #
+#    Updated: 2019/07/19 00:07:06 by tdeborde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRC_NAME	= 	Lexer/AVMInput.cpp \
 				Operands/OperandFactory.cpp \
 				Operands/Operand.cpp \
 				Parser/Parser.cpp \
+				Processor/Processor.cpp \
 				main.cpp
 
 

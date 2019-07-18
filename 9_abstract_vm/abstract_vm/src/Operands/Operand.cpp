@@ -30,3 +30,12 @@ void Operand<int>::checkUnderflow(int var)
     (void)var;
     return;
 }
+
+
+// #############################################################################
+// Getters/Setters #############################################################
+
+template <typename T>
+T Operand<T>::getNb(void) {
+    return this->p_nb;
+}

@@ -12,6 +12,6 @@ bool InstructionPop::check() {
 	return true;
 }
 
-void InstructionPop::run(std::vector<IOperand const *> &pile) {
+void InstructionPop::run(std::vector<IOperand const *> &pile) const {
 	pile.pop_back();
 }

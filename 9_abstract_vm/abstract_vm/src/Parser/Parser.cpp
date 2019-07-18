@@ -77,3 +77,7 @@ void 	Parser::parse(void)
 	if (this->p_exceptions.size())
 		this->printExceptions(this->p_exceptions);
 }
+
+std::vector<IInstruction const *> const  &Parser::getInstructions(void) {
+	return this->p_instructions;
+}

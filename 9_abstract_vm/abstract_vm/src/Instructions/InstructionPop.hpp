@@ -11,7 +11,7 @@ public:
 	~InstructionPop(void);
 
 	bool check();
-	void run(std::vector<IOperand const *> &pile);
+	void run(std::vector<IOperand const *> &pile) const;
 
 private:
 };

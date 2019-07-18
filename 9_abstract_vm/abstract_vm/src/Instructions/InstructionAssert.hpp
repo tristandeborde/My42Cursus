@@ -12,7 +12,7 @@ public:
 	~InstructionAssert(void);
 
 	bool check();
-	void run(std::vector<IOperand const *> &pile);
+	void run(std::vector<IOperand const *> &pile) const;
 	void setOperand(IOperand const *);
 
 private:

@@ -17,6 +17,8 @@ bool InstructionPush::check() {
 	return true;
 }
 
-void InstructionPush::run(std::vector<IOperand const *> &pile) {
+void InstructionPush::run(std::vector<IOperand const *> &pile) const {
+	std::cout << "Push" << '\n';
 	pile.push_back(this->p_operand);
+	std::cout << "OK" << '\n';
 }

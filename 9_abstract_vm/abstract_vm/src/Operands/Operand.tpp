@@ -80,6 +80,11 @@ class Operand: public IOperand {
         void checkOverflow(T var);
         void checkUnderflow(T var);
 
+// #############################################################################
+// Overflow/Underflow ##########################################################
+
+        T getNb(void);
+
     private:
         T               p_nb;
         std::string     p_value;

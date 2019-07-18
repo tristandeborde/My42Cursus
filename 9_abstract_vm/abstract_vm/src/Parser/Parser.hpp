@@ -26,11 +26,12 @@ public:
 	Parser & operator=(const Parser &) = delete;
 	Parser(const Parser &) = delete;
 
-	void	printExceptions(const std::vector<std::string> &);
-	bool 	isValidNumber(std::string token_str);
-	void 	checkToken(t_tokens_it it, t_tokens_it end);
-	void 	addInstruction(t_tokens_it it);
-	void 	parse(void);
+	void										printExceptions(const std::vector<std::string> &);
+	bool 										isValidNumber(std::string token_str);
+	void 										checkToken(t_tokens_it it, t_tokens_it end);
+	void 										addInstruction(t_tokens_it it);
+	std::vector<IInstruction const *> const &	getInstructions(void);
+	void 										parse(void);
 
 private:
 	std::vector<Token::Token>       	p_tokens;

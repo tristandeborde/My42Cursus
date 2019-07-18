@@ -1,6 +1,9 @@
 #ifndef PROCESSOR_HPP
 # define PROCESSOR_HPP
 
+# include "Instructions/IInstruction.hpp"
+# include "Operands/IOperand.hpp"
+
 // Takes a sequence of IInstruction objects as input and executes them on a stack.
 
 class Processor {
@@ -8,12 +11,14 @@ class Processor {
 public:
 
 	Processor(void);
-	Processor(const Processor &);
 	~Processor(void);
-	Processor & operator=(const Processor &);
+	Processor(const Processor &) = delete;
+	Processor & operator=(const Processor &) = delete;
+
+	void 	run(std::vector<IInstruction const *> const &instructions);
 
 private:
-
+	std::vector<IOperand const *> p_pile;
 };
 
 #endif

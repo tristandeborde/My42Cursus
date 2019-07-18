@@ -12,7 +12,7 @@ bool InstructionAdd::check() {
 	return true;
 }
 
-void InstructionAdd::run(std::vector<IOperand const *> &pile) {
+void InstructionAdd::run(std::vector<IOperand const *> &pile) const {
 	if (pile.size() < 2)
 		throw std::exception();
 

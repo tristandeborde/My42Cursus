@@ -2,7 +2,7 @@
 # define TOKENTYPE_HPP
 
 enum class TokenType {
-    exit = 1,
+    exit = 0,
     dump,
     push,
     pop,

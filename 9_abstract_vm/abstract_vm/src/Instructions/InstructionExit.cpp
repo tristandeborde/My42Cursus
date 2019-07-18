@@ -12,7 +12,8 @@ bool InstructionExit::check() {
 	return true;
 }
 
-void InstructionExit::run(std::vector<IOperand const *> &pile) {
+void InstructionExit::run(std::vector<IOperand const *> &pile) const {
+	std::cout << "Exit" << '\n';
 	(void)pile;
 	return;
 }
