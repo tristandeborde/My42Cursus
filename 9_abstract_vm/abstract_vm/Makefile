@@ -6,7 +6,7 @@
 #    By: tdeborde <tdeborde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/16 16:42:31 by tdeborde          #+#    #+#              #
-#    Updated: 2019/07/17 19:51:36 by tdeborde         ###   ########.fr        #
+#    Updated: 2019/07/18 15:20:17 by tdeborde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,17 @@ SRC_NAME	= 	Lexer/AVMInput.cpp \
 				Lexer/Lexer.cpp \
 				Lexer/Token.cpp \
 				Exceptions/Exceptions.cpp \
-				Instructions/InstructionPush.cpp \
+				Instructions/InstructionAdd.cpp \
+				Instructions/InstructionAssert.cpp \
+				Instructions/InstructionDiv.cpp \
+				Instructions/InstructionDump.cpp \
 				Instructions/InstructionExit.cpp \
+				Instructions/InstructionMod.cpp \
+				Instructions/InstructionMul.cpp \
+				Instructions/InstructionPop.cpp \
+				Instructions/InstructionPrint.cpp \
+				Instructions/InstructionPush.cpp \
+				Instructions/InstructionSub.cpp \
 				Instructions/InstructionFactory.cpp \
 				Operands/OperandFactory.cpp \
 				Operands/Operand.cpp \

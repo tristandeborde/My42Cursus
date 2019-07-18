@@ -12,6 +12,7 @@ bool InstructionExit::check() {
 	return true;
 }
 
-void InstructionExit::run() {
+void InstructionExit::run(std::vector<IOperand const *> &pile) {
+	(void)pile;
 	return;
 }

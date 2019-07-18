@@ -12,11 +12,11 @@ public:
 	~InstructionPush(void);
 
 	bool check();
-	void run();
-
+	void run(std::vector<IOperand const *> &pile);
+	void setOperand(IOperand const *);
 
 private:
-
+	IOperand const *p_operand;
 };
 
 #endif

@@ -11,7 +11,7 @@ public:
 	~InstructionExit(void);
 
 	bool check();
-	void run();
+	void run(std::vector<IOperand const *> &pile);
 
 private:
 
