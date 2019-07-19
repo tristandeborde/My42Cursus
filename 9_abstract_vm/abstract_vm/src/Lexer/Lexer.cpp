@@ -49,7 +49,7 @@ Token 	Lexer::checkToken(const std::string &token_str, int line_nb)
 	type = this->findTokenType(token_str);
 
 	if (type == TokenType::badsyntax)
-		throw (badSyntaxException::badSyntaxException(line_nb));
+		throw (badSyntaxException(line_nb));
 	return Token(token_str, type, line_nb);
 }
 
@@ -94,7 +94,7 @@ std::vector<std::string>		Lexer::getExceptions(void) const
 	return this->p_exceptions;
 }
 
-std::vector<Token::Token>       Lexer::getTokens(void) const
+std::vector<Token>       Lexer::getTokens(void) const
 {
 	return this->p_tokens;
 }

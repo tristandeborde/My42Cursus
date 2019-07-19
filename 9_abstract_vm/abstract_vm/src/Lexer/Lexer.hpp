@@ -21,19 +21,19 @@ public:
 	Lexer(const Lexer &) = delete;
 	Lexer & operator=(const Lexer &) = delete;
 
-	TokenType					findTokenType(const std::string &identifier);
-    Token 						checkToken(const std::string &identifier, int line_nb);
+	TokenType				findTokenType(const std::string &identifier);
+  Token 					checkToken(const std::string &identifier, int line_nb);
 	void						pushToken(const std::string &identifier, int line_nb);
 	void						readLine(const std::string &line, int line_nb);
 	void 						lex(const std::string &lines);
 	std::vector<std::string>	getExceptions(void) const;
-	std::vector<Token::Token>   getTokens(void) const;
+	std::vector<Token> getTokens(void) const;
 
 private:
 
 	std::vector<std::pair<std::regex, TokenType>> 	p_valid_tokens;
 	std::vector<std::string>						p_exceptions;
-    std::vector<Token::Token>           			p_tokens;
+  std::vector<Token>           				p_tokens;
 };
 
 #endif

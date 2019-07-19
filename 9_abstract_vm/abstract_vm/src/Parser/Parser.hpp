@@ -18,7 +18,7 @@ class Parser {
 
 public:
 
-	typedef std::vector<Token::Token>::const_iterator t_tokens_it;
+	typedef std::vector<Token>::const_iterator t_tokens_it;
 
 	Parser(const Lexer &lexer);
 	~Parser(void);
@@ -34,7 +34,7 @@ public:
 	void 										parse(void);
 
 private:
-	std::vector<Token::Token>       	p_tokens;
+	std::vector<Token>       			p_tokens;
 	std::vector<std::string>			p_exceptions;
 	std::vector<IInstruction const *> 	p_instructions;
 	InstructionFactory 					p_factory;
