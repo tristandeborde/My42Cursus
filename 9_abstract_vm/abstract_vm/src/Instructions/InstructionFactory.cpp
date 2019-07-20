@@ -13,28 +13,36 @@ IInstruction const * InstructionFactory::createExit( void ) {
     return instru;
 }
 IInstruction const * InstructionFactory::createDump( void ) {
-    return NULL;
+    IInstruction const * instru = new InstructionDump();
+    return instru;
 }
 IInstruction const * InstructionFactory::createPop( void ) {
-    return NULL;
+    IInstruction const * instru = new InstructionPop();
+    return instru;
 }
 IInstruction const * InstructionFactory::createAdd( void ) {
-    return NULL;
+    IInstruction const * instru = new InstructionAdd();
+    return instru;
 }
 IInstruction const * InstructionFactory::createSub( void ) {
-    return NULL;
+    IInstruction const * instru = new InstructionSub();
+    return instru;
 }
 IInstruction const * InstructionFactory::createMul( void ) {
-    return NULL;
+    IInstruction const * instru = new InstructionMul();
+    return instru;
 }
 IInstruction const * InstructionFactory::createDiv( void ) {
-    return NULL;
+    IInstruction const * instru = new InstructionDiv();
+    return instru;
 }
 IInstruction const * InstructionFactory::createMod( void ) {
-    return NULL;
+    IInstruction const * instru = new InstructionMod();
+    return instru;
 }
 IInstruction const * InstructionFactory::createPrint( void ) {
-    return NULL;
+    IInstruction const * instru = new InstructionPrint();
+    return instru;
 }
 
 IInstruction const * InstructionFactory::createPush( void ) {
@@ -42,7 +50,8 @@ IInstruction const * InstructionFactory::createPush( void ) {
     return instru;
 }
 IInstruction const * InstructionFactory::createAssert( void ) {
-    return NULL;
+    IInstruction const * instru = new InstructionAssert();
+    return instru;
 }
 
 IInstruction const * InstructionFactory::createInstruction (TokenType const type) {

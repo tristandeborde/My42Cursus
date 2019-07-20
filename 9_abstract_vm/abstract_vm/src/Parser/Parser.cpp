@@ -52,14 +52,19 @@ void 	Parser::checkToken(t_tokens_it it, t_tokens_it end)
 	}
 }
 
-void 	Parser::addInstruction(t_tokens_it it)
+void 	Parser::addOperand(t_tokens_it it, TokenType type)
 {
-	// Check if token is an instruction (not an Operand, not an error)
-	TokenType type = (*it).getType();
-	if (type > TokenType::print)
-		return ;
+	// Check if token is operand -> attach to prev Instr
+	eOperandType type_conv = static_cast<eOperandType>(static_cast<int>(type) - 12);
 
-	IInstruction const *instru = this->p_factory.createInstruction(type);
+	auto prev = this->p_instructions.front();
+	prev->p_operand = this->p_operand_factory.createOperand(type_conv, it->getToken());
+}
+
+void 	Parser::addInstruction(TokenType type)
+{
+	// Token is Instruction
+	IInstruction const *instru = this->p_instru_factory.createInstruction(type);
 	this->p_instructions.push_back(instru);
 }
 
@@ -68,7 +73,13 @@ void 	Parser::parse(void)
 	for (t_tokens_it it = this->p_tokens.begin(); it != this->p_tokens.end(); it++) {
 		try {
 			this->checkToken(it, this->p_tokens.end());
-			this->addInstruction(it);
+			TokenType type = (*it).getType();
+			if (type == TokenType::endl)
+				continue;
+			else if (type >= TokenType::int8)
+				this->addOperand(it, type);
+			else if (type >= TokenType::exit)
+				this->addInstruction(type);
 		}
 		catch (ParserException &e) {
 			this->p_exceptions.push_back(e.what());

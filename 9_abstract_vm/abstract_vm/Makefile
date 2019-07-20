@@ -17,7 +17,7 @@ NAME  = avm
 CC    = clang++
 
 # Flags #
-FLAGS = -std=c++11 -Wall -Wextra -Werror
+FLAGS = -std=c++11 -g -Wall -Wextra -Werror
 
 # Sources #
 SRC_NAME	= 	Lexer/AVMInput.cpp \

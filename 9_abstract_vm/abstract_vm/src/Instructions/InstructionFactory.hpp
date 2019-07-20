@@ -5,6 +5,15 @@
 # include "Instructions/IInstruction.hpp"
 # include "Instructions/InstructionPush.hpp"
 # include "Instructions/InstructionExit.hpp"
+# include "Instructions/InstructionAssert.hpp"
+# include "Instructions/InstructionDump.hpp"
+# include "Instructions/InstructionPop.hpp"
+# include "Instructions/InstructionAdd.hpp"
+# include "Instructions/InstructionSub.hpp"
+# include "Instructions/InstructionMul.hpp"
+# include "Instructions/InstructionDiv.hpp"
+# include "Instructions/InstructionMod.hpp"
+# include "Instructions/InstructionPrint.hpp"
 
 class InstructionFactory {
 
