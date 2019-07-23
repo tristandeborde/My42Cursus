@@ -16,14 +16,7 @@ void	Parser::printExceptions(const std::vector<std::string> &exceptions)
 	throw (GenericException());
 }
 
-bool 	Parser::isValidNumber(std::string token_str)
-{
-	if (std::regex_search(token_str, std::regex("\\(\\d*\\.?\\d*\\)")))
-		return true;
-	return false;
-}
-
-void 	Parser::checkToken(t_tokens_it it, t_tokens_it end)
+void 	Parser::checkSequence(t_tokens_it it, t_tokens_it end)
 {
 	t_tokens_it next = it + 1;
 	TokenType type = (*it).getType();
@@ -41,30 +34,42 @@ void 	Parser::checkToken(t_tokens_it it, t_tokens_it end)
 		if (next == end || (*next).getType() != TokenType::endl)
 			throw (forbiddenInstructionException((*it).getLineNb()));
 	}
-	// IF NB: check if value is (valid format && !overflow//underflow)
-	if (type != TokenType::endl && type >= TokenType::int8) {
-		if (!(this->isValidNumber((*it).getToken())))
-			throw (invalidNumberException((*it).getLineNb()));
-	}
 	// IF LAST != exit
 	if (next->getType() == TokenType::endl && (next + 1) == end && type != TokenType::exit) {
 		throw (noExitException((*it).getLineNb()));
 	}
 }
 
+std::string 	Parser::getNumber(t_tokens_it it)
+{
+	std::smatch nb;
+
+	if (!std::regex_search((*it).getToken(), nb, std::regex("\\((\\d*\\.?\\d*)\\)")))
+		throw (invalidNumberException((*it).getLineNb()));
+	return nb[1];
+}
+
 void 	Parser::addOperand(t_tokens_it it, TokenType type)
 {
+	// Extract nb string from token_str
+	std::string 	nb = this->getNumber(it);
+
 	// Check if token is operand -> attach to prev Instr
 	eOperandType type_conv = static_cast<eOperandType>(static_cast<int>(type) - 12);
 
 	auto prev = this->p_instructions.front();
-	prev->p_operand = this->p_operand_factory.createOperand(type_conv, it->getToken());
+	InstructionPush *push = dynamic_cast<InstructionPush *>(prev);
+	if (push != nullptr)
+		push->setOperand(this->p_operand_factory.createOperand(type_conv, nb));
+	InstructionAssert *assert = dynamic_cast<InstructionAssert *>(prev);
+	if (assert != nullptr)
+		assert->setOperand(this->p_operand_factory.createOperand(type_conv, nb));
 }
 
 void 	Parser::addInstruction(TokenType type)
 {
 	// Token is Instruction
-	IInstruction const *instru = this->p_instru_factory.createInstruction(type);
+	IInstruction *instru = this->p_instru_factory.createInstruction(type);
 	this->p_instructions.push_back(instru);
 }
 
@@ -72,7 +77,7 @@ void 	Parser::parse(void)
 {
 	for (t_tokens_it it = this->p_tokens.begin(); it != this->p_tokens.end(); it++) {
 		try {
-			this->checkToken(it, this->p_tokens.end());
+			this->checkSequence(it, this->p_tokens.end());
 			TokenType type = (*it).getType();
 			if (type == TokenType::endl)
 				continue;
@@ -89,6 +94,6 @@ void 	Parser::parse(void)
 		this->printExceptions(this->p_exceptions);
 }
 
-std::vector<IInstruction const *> const  &Parser::getInstructions(void) {
+std::vector<IInstruction *> const  &Parser::getInstructions(void) {
 	return this->p_instructions;
 }

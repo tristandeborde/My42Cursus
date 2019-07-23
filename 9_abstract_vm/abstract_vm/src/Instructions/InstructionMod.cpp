@@ -1,6 +1,6 @@
 #include "InstructionMod.hpp"
 
-InstructionMod::InstructionMod(void) {
+InstructionMod::InstructionMod(void): IInstruction(TokenType::mod) {
 	return;
 }
 

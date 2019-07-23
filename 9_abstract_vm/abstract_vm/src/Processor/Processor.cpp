@@ -8,7 +8,7 @@ Processor::~Processor(void) {
 	return;
 }
 
-void Processor::run(std::vector<IInstruction const *> const &instructions) {
+void Processor::run(std::vector<IInstruction *> const &instructions) {
 	int i = 1;
 	//IOperand const *test = new Operand<int>(4, std::string("4"), eOperandType::Int8, 0);
 	for (auto elem : instructions) {

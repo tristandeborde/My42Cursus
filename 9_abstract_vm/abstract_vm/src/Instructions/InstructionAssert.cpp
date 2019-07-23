@@ -1,6 +1,7 @@
 #include "InstructionAssert.hpp"
 
-InstructionAssert::InstructionAssert(void): p_operand(NULL) {
+InstructionAssert::InstructionAssert(void)
+	: IInstruction(TokenType::assert), p_operand(NULL) {
 	return;
 }
 

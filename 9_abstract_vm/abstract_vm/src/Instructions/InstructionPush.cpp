@@ -1,6 +1,7 @@
 #include "Instructions/InstructionPush.hpp"
 
-InstructionPush::InstructionPush(void): p_operand(NULL) {
+InstructionPush::InstructionPush(void)
+	: IInstruction(TokenType::push), p_operand(NULL) {
 	return;
 }
 

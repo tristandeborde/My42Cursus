@@ -27,20 +27,20 @@ public:
 	Parser & operator=(const Parser &) = delete;
 	Parser(const Parser &) = delete;
 
-	void										printExceptions(const std::vector<std::string> &);
-	bool 										isValidNumber(std::string token_str);
-	void 										checkToken(t_tokens_it it, t_tokens_it end);
-	void 										addInstruction(TokenType type);
-	void 										addOperand(t_tokens_it it, TokenType type);
-	std::vector<IInstruction const *> const &	getInstructions(void);
-	void 										parse(void);
+	void								printExceptions(const std::vector<std::string> &);
+	std::string							getNumber(t_tokens_it it);
+	void 								checkSequence(t_tokens_it it, t_tokens_it end);
+	void 								addInstruction(TokenType type);
+	void 								addOperand(t_tokens_it it, TokenType type);
+	std::vector<IInstruction *> const &	getInstructions(void);
+	void 								parse(void);
 
 private:
 	std::vector<Token>       			p_tokens;
 	std::vector<std::string>			p_exceptions;
-	std::vector<IInstruction const *> 	p_instructions;
+	std::vector<IInstruction *> 		p_instructions;
 	InstructionFactory 					p_instru_factory;
-	OperandFactory 							p_operand_factory;
+	OperandFactory 						p_operand_factory;
 };
 
 #endif

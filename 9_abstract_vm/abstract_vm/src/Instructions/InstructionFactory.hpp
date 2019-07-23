@@ -19,28 +19,28 @@ class InstructionFactory {
 
 public:
 
-	typedef IInstruction const * (InstructionFactory::* t_builder) (void);
+	typedef IInstruction * (InstructionFactory::* t_builder) (void);
 
 	~InstructionFactory(void);
 	InstructionFactory(void);
 	InstructionFactory(const InstructionFactory &) = delete;
 	InstructionFactory & operator=(const InstructionFactory &) = delete;
 
-	IInstruction const * createInstruction (TokenType const);
+	IInstruction * createInstruction (TokenType const);
 
 private:
-	IInstruction const * createExit( void );
-	IInstruction const * createDump( void );
-	IInstruction const * createPop( void );
-	IInstruction const * createAdd( void );
-	IInstruction const * createSub( void );
-	IInstruction const * createMul( void );
-	IInstruction const * createDiv( void );
-	IInstruction const * createMod( void );
-	IInstruction const * createPrint( void );
+	IInstruction * createExit( void );
+	IInstruction * createDump( void );
+	IInstruction * createPop( void );
+	IInstruction * createAdd( void );
+	IInstruction * createSub( void );
+	IInstruction * createMul( void );
+	IInstruction * createDiv( void );
+	IInstruction * createMod( void );
+	IInstruction * createPrint( void );
 
-	IInstruction const * createPush( void );
-	IInstruction const * createAssert( void );
+	IInstruction * createPush( void );
+	IInstruction * createAssert( void );
 
 	static t_builder p_builders[static_cast<int>(TokenType::COUNT)];
 };

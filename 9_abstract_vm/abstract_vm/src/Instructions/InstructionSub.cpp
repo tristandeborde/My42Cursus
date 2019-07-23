@@ -1,6 +1,6 @@
 #include "InstructionSub.hpp"
 
-InstructionSub::InstructionSub(void) {
+InstructionSub::InstructionSub(void): IInstruction(TokenType::sub) {
 	return;
 }
 

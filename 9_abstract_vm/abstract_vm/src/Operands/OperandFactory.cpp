@@ -9,31 +9,31 @@ OperandFactory::~OperandFactory(void) {
 }
 
 IOperand const* OperandFactory::createInt8( std::string const& value ) const {
-    int nb = std::stoi(value);
+    int nb = std::stoi(const_cast<std::string &>(value));
     Operand<int> *ope = new Operand<int>(nb, value, eOperandType::Int8, 0);
     return ope;
 }
 
 IOperand const* OperandFactory::createInt16( std::string const& value ) const {
-    int nb = std::stoi(value);
+    int nb = std::stoi(const_cast<std::string &>(value));
     Operand<int> *ope = new Operand<int>(nb, value, eOperandType::Int16, 0);
     return ope;
 }
 
 IOperand const* OperandFactory::createInt32( std::string const& value ) const {
-    int nb = std::stoi(value);
+    int nb = std::stoi(const_cast<std::string &>(value));
     Operand<int> *ope = new Operand<int>(nb, value, eOperandType::Int32, 0);
     return ope;
 }
 
 IOperand const* OperandFactory::createFloat( std::string const& value ) const {
-    int nb = std::stof(value);
+    int nb = std::stof(const_cast<std::string &>(value));
     Operand<int> *ope = new Operand<int>(nb, value, eOperandType::Float, 0);
     return ope;
 }
 
 IOperand const* OperandFactory::createDouble( std::string const& value ) const {
-    int nb = std::stof(value);
+    int nb = std::stof(const_cast<std::string &>(value));
     Operand<int> *ope = new Operand<int>(nb, value, eOperandType::Double, 0);
     return ope;
 }

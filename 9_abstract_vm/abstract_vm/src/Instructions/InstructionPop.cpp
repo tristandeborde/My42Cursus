@@ -1,6 +1,6 @@
 #include "InstructionPop.hpp"
 
-InstructionPop::InstructionPop(void) {
+InstructionPop::InstructionPop(void): IInstruction(TokenType::pop) {
 	return;
 }
 

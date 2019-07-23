@@ -1,6 +1,6 @@
 #include "InstructionAdd.hpp"
 
-InstructionAdd::InstructionAdd(void) {
+InstructionAdd::InstructionAdd(void): IInstruction(TokenType::add) {
 	return;
 }
 

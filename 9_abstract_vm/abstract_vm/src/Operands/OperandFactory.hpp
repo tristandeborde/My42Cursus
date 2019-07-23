@@ -3,6 +3,7 @@
 
 # include "Operands/Operand.tpp"
 # include "Operands/IOperand.hpp"
+# include <iostream>
 
 class OperandFactory {
     public:

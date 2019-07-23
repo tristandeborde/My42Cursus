@@ -1,6 +1,6 @@
 #include "InstructionDiv.hpp"
 
-InstructionDiv::InstructionDiv(void) {
+InstructionDiv::InstructionDiv(void): IInstruction(TokenType::div) {
 	return;
 }
 

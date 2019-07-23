@@ -6,7 +6,7 @@
 #    By: tdeborde <tdeborde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/16 16:42:31 by tdeborde          #+#    #+#              #
-#    Updated: 2019/07/19 00:07:06 by tdeborde         ###   ########.fr        #
+#    Updated: 2019/07/23 17:46:52 by tdeborde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 NAME  = avm
 
 # Compiler #
-CC    = clang++
+CC    = g++
 
 # Flags #
 FLAGS = -std=c++11 -g -Wall -Wextra -Werror
@@ -24,6 +24,7 @@ SRC_NAME	= 	Lexer/AVMInput.cpp \
 				Lexer/Lexer.cpp \
 				Lexer/Token.cpp \
 				Exceptions/Exceptions.cpp \
+				Instructions/IInstruction.cpp \
 				Instructions/InstructionAdd.cpp \
 				Instructions/InstructionAssert.cpp \
 				Instructions/InstructionDiv.cpp \
