@@ -10,7 +10,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/avm",
-            "args": ["scripts_avm/good.avm"],
+            "args": ["scripts_avm/sample.avm"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

@@ -18,7 +18,7 @@ bool InstructionAssert::check(void) {
 }
 
 void InstructionAssert::run(std::vector<IOperand const *> &pile) const {
-	if (this->p_operand->toString() == pile.back()->toString())
+	if (!(this->p_operand->toString() == pile.back()->toString()))
 	{
 		std::cout << "Argument is not equal to the value on top of stack." << std::endl;
 		throw std::exception();

@@ -43,10 +43,11 @@ void 	Parser::checkSequence(t_tokens_it it, t_tokens_it end)
 std::string 	Parser::getNumber(t_tokens_it it)
 {
 	std::smatch nb;
-
-	if (!std::regex_search((*it).getToken(), nb, std::regex("\\((\\d*\\.?\\d*)\\)")))
+	#include <iostream>
+	if (!std::regex_search((*it).getToken(), nb, std::regex("\\((\\d*\\.?\\d*)\\)"))
+		|| !nb[1].str().size())
 		throw (invalidNumberException((*it).getLineNb()));
-	return nb[1];
+	return nb[1].str();
 }
 
 void 	Parser::addOperand(t_tokens_it it, TokenType type)
