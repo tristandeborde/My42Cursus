@@ -55,9 +55,9 @@ void 	Parser::addOperand(t_tokens_it it, TokenType type)
 	std::string 	nb = this->getNumber(it);
 
 	// Check if token is operand -> attach to prev Instr
-	eOperandType type_conv = static_cast<eOperandType>(static_cast<int>(type) - 12);
+	eOperandType type_conv = static_cast<eOperandType>(static_cast<int>(type) - 11);
 
-	auto prev = this->p_instructions.front();
+	auto prev = this->p_instructions.back();
 	InstructionPush *push = dynamic_cast<InstructionPush *>(prev);
 	if (push != nullptr)
 		push->setOperand(this->p_operand_factory.createOperand(type_conv, nb));

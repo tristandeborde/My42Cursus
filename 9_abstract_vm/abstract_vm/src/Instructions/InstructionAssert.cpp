@@ -9,8 +9,8 @@ InstructionAssert::~InstructionAssert(void) {
 	return;
 }
 
-void InstructionAssert::setOperand(IOperand const *) {
-	return;
+void InstructionAssert::setOperand(IOperand const *operand) {
+	this->p_operand = operand;
 }
 
 bool InstructionAssert::check(void) {
