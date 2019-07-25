@@ -1,6 +1,6 @@
 #include "InstructionDump.hpp"
 
-InstructionDump::InstructionDump(void): IInstruction(TokenType::dump) {
+InstructionDump::InstructionDump(void): IInstruction(eTokenType::dump) {
 	return;
 }
 

@@ -4,20 +4,20 @@
 # include <vector>
 # include <iostream>
 # include "Operands/Operand.tpp"
-# include "Lexer/TokenType.hpp"
+# include "Lexer/eTokenType.hpp"
 
 class IInstruction {
 
 public:
 
-	IInstruction(TokenType);
+	IInstruction(eTokenType);
 	virtual ~IInstruction(void) {};
 
 	virtual bool check() = 0;
 	virtual void run(std::vector<IOperand const *> &pile) const = 0;
 
 protected:
-	TokenType p_type;
+	eTokenType p_type;
 };
 
 #endif

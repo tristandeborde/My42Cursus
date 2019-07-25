@@ -1,6 +1,6 @@
 #include "InstructionPrint.hpp"
 
-InstructionPrint::InstructionPrint(void): IInstruction(TokenType::print) {
+InstructionPrint::InstructionPrint(void): IInstruction(eTokenType::print) {
 	return;
 }
 

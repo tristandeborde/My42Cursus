@@ -6,7 +6,7 @@
 # include <regex>
 # include <sstream>
 # include <iostream>
-# include "Lexer/TokenType.hpp"
+# include "Lexer/eTokenType.hpp"
 # include "Lexer/Token.hpp"
 # include "Exceptions/Exceptions.hpp"
 
@@ -21,7 +21,7 @@ public:
 	Lexer(const Lexer &) = delete;
 	Lexer & operator=(const Lexer &) = delete;
 
-	TokenType				findTokenType(const std::string &identifier);
+	eTokenType				findeTokenType(const std::string &identifier);
   Token 					checkToken(const std::string &identifier, int line_nb);
 	void						pushToken(const std::string &identifier, int line_nb);
 	void						readLine(const std::string &line, int line_nb);
@@ -31,7 +31,7 @@ public:
 
 private:
 
-	std::vector<std::pair<std::regex, TokenType>> 	p_valid_tokens;
+	std::vector<std::pair<std::regex, eTokenType>> 	p_valid_tokens;
 	std::vector<std::string>						p_exceptions;
   std::vector<Token>           				p_tokens;
 };

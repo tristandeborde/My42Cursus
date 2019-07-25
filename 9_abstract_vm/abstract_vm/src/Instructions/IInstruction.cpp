@@ -1,5 +1,5 @@
 #include "Instructions/IInstruction.hpp"
 
-IInstruction::IInstruction(TokenType type): p_type(type) {
+IInstruction::IInstruction(eTokenType type): p_type(type) {
     return;
 }

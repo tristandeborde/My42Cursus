@@ -54,8 +54,8 @@ IInstruction * InstructionFactory::createAssert( void ) {
     return instru;
 }
 
-IInstruction * InstructionFactory::createInstruction (TokenType const type) {
-    t_builder p_builders[static_cast<int>(TokenType::COUNT)] = {
+IInstruction * InstructionFactory::createInstruction (eTokenType const type) {
+    t_builder p_builders[static_cast<int>(eTokenType::COUNT)] = {
         &InstructionFactory::createExit,
         &InstructionFactory::createDump,
         &InstructionFactory::createPush,

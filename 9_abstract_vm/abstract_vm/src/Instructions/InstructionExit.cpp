@@ -1,6 +1,6 @@
 #include "Instructions/InstructionExit.hpp"
 
-InstructionExit::InstructionExit(void): IInstruction(TokenType::exit) {
+InstructionExit::InstructionExit(void): IInstruction(eTokenType::exit) {
 	return;
 }
 

@@ -1,6 +1,6 @@
 #include "Lexer/Token.hpp"
 
-Token::Token(std::string token, TokenType type, int line_nb):
+Token::Token(std::string token, eTokenType type, int line_nb):
 	p_token(token), p_type(type), p_line_nb(line_nb)
 {
 	return;
@@ -18,7 +18,7 @@ Token::~Token(void)
 	return;
 }
 
-TokenType Token::getType(void) const
+eTokenType Token::getType(void) const
 {
 	return (this->p_type);
 }

@@ -1,6 +1,6 @@
 #include "InstructionMul.hpp"
 
-InstructionMul::InstructionMul(void): IInstruction(TokenType::mul) {
+InstructionMul::InstructionMul(void): IInstruction(eTokenType::mul) {
 	return;
 }
 

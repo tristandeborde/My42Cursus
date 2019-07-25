@@ -3,23 +3,24 @@
 Lexer::Lexer(void)
 {
 	this->p_valid_tokens =  {
-		std::make_pair(std::regex("\\n"), TokenType::endl),
-		std::make_pair(std::regex("exit"), TokenType::exit),
-		std::make_pair(std::regex("dump"), TokenType::dump),
-		std::make_pair(std::regex("push"), TokenType::push),
-		std::make_pair(std::regex("pop"), TokenType::pop),
-		std::make_pair(std::regex("assert"), TokenType::assert),
-		std::make_pair(std::regex("add"), TokenType::add),
-		std::make_pair(std::regex("sub"), TokenType::sub),
-		std::make_pair(std::regex("mul"), TokenType::mul),
-		std::make_pair(std::regex("div"), TokenType::div),
-		std::make_pair(std::regex("mod"), TokenType::mod),
-		std::make_pair(std::regex("print"), TokenType::print),
-		std::make_pair(std::regex("int8(.*)"), TokenType::int8),
-		std::make_pair(std::regex("int16(.*)"), TokenType::int16),
-		std::make_pair(std::regex("int32(.*)"), TokenType::int32),
-		std::make_pair(std::regex("float(.*)"), TokenType::flt),
-		std::make_pair(std::regex("double(.*)"), TokenType::dbl),
+		std::make_pair(std::regex("\\n"), eTokenType::endl),
+		std::make_pair(std::regex("exit"), eTokenType::exit),
+		std::make_pair(std::regex("dump"), eTokenType::dump),
+		std::make_pair(std::regex("push"), eTokenType::push),
+		std::make_pair(std::regex("pop"), eTokenType::pop),
+		std::make_pair(std::regex("assert"), eTokenType::assert),
+		std::make_pair(std::regex("add"), eTokenType::add),
+		std::make_pair(std::regex("sub"), eTokenType::sub),
+		std::make_pair(std::regex("mul"), eTokenType::mul),
+		std::make_pair(std::regex("div"), eTokenType::div),
+		std::make_pair(std::regex("mod"), eTokenType::mod),
+		std::make_pair(std::regex("print"), eTokenType::print),
+		std::make_pair(std::regex("int8(.*)"), eTokenType::int8),
+		std::make_pair(std::regex("int16(.*)"), eTokenType::int16),
+		std::make_pair(std::regex("int32(.*)"), eTokenType::int32),
+		std::make_pair(std::regex("float(.*)"), eTokenType::flt),
+		std::make_pair(std::regex("double(.*)"), eTokenType::dbl),
+		std::make_pair(std::regex(";;"), eTokenType::eof),
 	};
 	return;
 }
@@ -29,7 +30,7 @@ Lexer::~Lexer(void)
 	return;
 }
 
-TokenType	Lexer::findTokenType(const std::string &token_str)
+eTokenType	Lexer::findeTokenType(const std::string &token_str)
 {
 	// Token is valid (instruction, parenthesis or number)
 	for (auto elem : this->p_valid_tokens)
@@ -38,17 +39,17 @@ TokenType	Lexer::findTokenType(const std::string &token_str)
 			return elem.second;
 	}
 	// Token is unrecognized
-	return TokenType::badsyntax;
+	return eTokenType::badsyntax;
 }
 
 
 Token 	Lexer::checkToken(const std::string &token_str, int line_nb)
 {
-	TokenType 		type;
+	eTokenType 		type;
 
-	type = this->findTokenType(token_str);
+	type = this->findeTokenType(token_str);
 
-	if (type == TokenType::badsyntax)
+	if (type == eTokenType::badsyntax)
 		throw (badSyntaxException(line_nb));
 	return Token(token_str, type, line_nb);
 }
@@ -87,6 +88,7 @@ void Lexer::lex(const std::string &lines)
 	line_nb = 1;
 	for (std::string line; std::getline(iss, line); line_nb++)
 		this->readLine(line, line_nb);
+	this->pushToken(";;", line_nb);
 }
 
 std::vector<std::string>		Lexer::getExceptions(void) const

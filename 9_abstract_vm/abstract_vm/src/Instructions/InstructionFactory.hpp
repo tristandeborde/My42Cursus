@@ -1,7 +1,7 @@
 #ifndef INSTRUCTIONFACTORY_HPP
 # define INSTRUCTIONFACTORY_HPP
 
-# include "Lexer/TokenType.hpp"
+# include "Lexer/eTokenType.hpp"
 # include "Instructions/IInstruction.hpp"
 # include "Instructions/InstructionPush.hpp"
 # include "Instructions/InstructionExit.hpp"
@@ -26,7 +26,7 @@ public:
 	InstructionFactory(const InstructionFactory &) = delete;
 	InstructionFactory & operator=(const InstructionFactory &) = delete;
 
-	IInstruction * createInstruction (TokenType const);
+	IInstruction * createInstruction (eTokenType const);
 
 private:
 	IInstruction * createExit( void );
@@ -42,7 +42,7 @@ private:
 	IInstruction * createPush( void );
 	IInstruction * createAssert( void );
 
-	static t_builder p_builders[static_cast<int>(TokenType::COUNT)];
+	static t_builder p_builders[static_cast<int>(eTokenType::COUNT)];
 };
 
 #endif
