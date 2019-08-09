@@ -2,61 +2,69 @@
 # define EXCEPTIONS_HPP
 
 #include <string>
+#include "Lexer/eTokenType.hpp"
 
-class ParserException: public std::exception
+class LexerParserException: public std::exception
 {
     public:
         const char* what() const throw();
 
-        ParserException(int line_nb, std::string err_msg);
-        virtual ~ParserException(void) {} ;
-        ParserException & operator=(const ParserException &) = delete;
-        ParserException(const ParserException &);
+        LexerParserException(int line_nb, std::string err_msg);
+        virtual ~LexerParserException(void) {} ;
+        LexerParserException & operator=(const LexerParserException &) = delete;
+        LexerParserException(const LexerParserException &);
     private:
         int         p_line_nb;
         std::string p_error_msg;
 };
 
-class badSyntaxException: public ParserException
+class badSyntaxException: public LexerParserException
 {
     public:
         badSyntaxException(int line_nb);
         ~badSyntaxException(void);
 };
 
-class invalidNumberException: public ParserException
+class invalidNumberException: public LexerParserException
 {
     public:
         invalidNumberException(int line_nb);
         virtual ~invalidNumberException(void);
 };
 
-class missingNumberException: public ParserException
+class missingNumberException: public LexerParserException
 {
     public:
         missingNumberException(int line_nb);
         virtual ~missingNumberException(void);
 };
 
-class overflowException: public ParserException
+class overflowException: public LexerParserException
 {
     public:
         overflowException(int line_nb);
         virtual ~overflowException(void);
 };
 
-class forbiddenInstructionException: public ParserException
+class forbiddenTokenException: public LexerParserException
 {
     public:
-        forbiddenInstructionException(int line_nb);
-        virtual ~forbiddenInstructionException(void);
+        forbiddenTokenException(int line_nb);
+        virtual ~forbiddenTokenException(void);
 };
 
-class noExitException: public ParserException
+class noExitException: public LexerParserException
 {
     public:
         noExitException(int line_nb);
         virtual ~noExitException(void);
+};
+
+class misplacedExitException: public LexerParserException
+{
+    public:
+        misplacedExitException(int line_nb);
+        virtual ~misplacedExitException(void);
 };
 
 class GenericException: public std::exception
@@ -64,5 +72,23 @@ class GenericException: public std::exception
     public:
         virtual const char * what() const throw();
 };
+
+class ExceptionFactory
+{
+    public:
+        ExceptionFactory(void);
+        ~ExceptionFactory(void);
+        ExceptionFactory(const ExceptionFactory &) = delete;
+        ExceptionFactory & operator=(const ExceptionFactory &) = delete;
+
+        typedef LexerParserException (ExceptionFactory::*t_builder)(int line_nb) const;
+        
+        LexerParserException createMissingNumber(int line_nb) const;
+        LexerParserException createForbiddenInstruction(int line_nb) const;
+        LexerParserException createNoExit(int line_nb) const;
+        LexerParserException createMisplacedExit(int line_nb) const;
+        LexerParserException create(eExceptionType type, int line_nb) const;
+};
+
 
 #endif

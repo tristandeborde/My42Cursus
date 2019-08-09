@@ -58,9 +58,12 @@ void	Lexer::pushToken(const std::string &token_str, int line_nb)
 {
 	try
 	{
-		this->p_tokens.push_back((this->checkToken(token_str, line_nb)));
+		Token t = this->checkToken(token_str, line_nb);
+		// Don't push endl tokens
+		if (t.getType() != eTokenType::endl)
+			this->p_tokens.push_back(t);
 	}
-	catch (ParserException &e)
+	catch (LexerParserException &e)
 	{
 		this->p_exceptions.push_back(e.what());
 	}

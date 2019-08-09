@@ -3,12 +3,14 @@
 ; -------------
 
 push int32(42)
+assert float(mdr)
 push int32(11)
-push float(44.55)
+push float(44.55) float(42.)
 mul
-push int32(10)
+push int32(10) push
 pop
 push double(42.42)
+hello
 dump
 assert double(42.42)
 exit

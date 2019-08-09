@@ -1,5 +1,5 @@
-#ifndef eTokenType_HPP
-# define eTokenType_HPP
+#ifndef ETOKENTYPE_HPP
+# define ETOKENTYPE_HPP
 
 # include <cstddef>
 
@@ -21,19 +21,17 @@ enum class eTokenType {
     flt,
     dbl,
     endl,
+    eof, // recently swapped with badsyntax
     badsyntax,
-    eof,
     COUNT
 };
 
-// Custom struct, necessary in order to use eTokenType as a map key in Parser.cpp
-struct eTokenTypeHash
-{
-    template <typename T>
-    std::size_t operator()(T t) const
-    {
-        return static_cast<std::size_t>(t);
-    }
+enum class eExceptionType {
+    missingNumberException = 0,
+    forbiddenTokenException,
+    noExitException,
+    misplacedExitException,
+    COUNT
 };
 
 #endif
