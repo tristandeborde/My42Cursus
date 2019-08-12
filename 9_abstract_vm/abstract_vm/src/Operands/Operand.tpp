@@ -65,13 +65,13 @@ class Operand: public IOperand {
             res->p_value = std::to_string(res->p_nb);
             return (static_cast<IOperand *>(res));
         } // Quotient
-        IOperand const *operator%( IOperand const & rhs ) const {
-            Operand<T> *res = new Operand<T>(*this);
-            // TODO: handle over/underflows
-            res->p_nb %= dynamic_cast<const Operand<T> &>(rhs).p_nb;
-            res->p_value = std::to_string(res->p_nb);
-            return (static_cast<IOperand *>(res));
-        } // Modulo
+        // template <typename T>
+        // IOperand const *operator%( IOperand const & rhs ) const {
+        //     return ( this->mod(dynamic_cast<const Operand<T> &>(rhs)) );
+        // }
+        IOperand const *operator%( IOperand const & rhs ) const;
+
+        // IOperand const *mod( Operand<T> const & rhs ) const;
 
 
 // #############################################################################
@@ -91,5 +91,7 @@ class Operand: public IOperand {
         eOperandType    p_type;
         int             p_precision;
 };
+
+
 
 #endif

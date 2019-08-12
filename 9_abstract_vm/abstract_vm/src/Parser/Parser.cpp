@@ -20,7 +20,7 @@ void	Parser::printExceptions(const std::vector<std::string> &exceptions)
 std::string 	Parser::getNumber(t_tokens_it it)
 {
 	std::smatch nb;
-	if (!std::regex_search((*it).getToken(), nb, std::regex("\\((\\d*\\.?\\d*)\\)"))
+	if (!std::regex_search((*it).getToken(), nb, std::regex("\\(([-+]?\\d*\\.?\\d*)\\)"))
 		|| !nb[1].str().size())
 		throw (invalidNumberException((*it).getLineNb()));
 	return nb[1].str();

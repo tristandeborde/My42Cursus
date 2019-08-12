@@ -2,6 +2,7 @@
 # define IOPERAND_HPP
 
 # include <string>
+# include <cmath>
 
 enum class eOperandType {
     Int8 = 0,

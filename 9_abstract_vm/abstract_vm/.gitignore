@@ -1,5 +1,8 @@
 # Name of executable
 avm
+test/*
+abstract_vm.sh
+.vscode/*
 
 # Prerequisites
 *.d
