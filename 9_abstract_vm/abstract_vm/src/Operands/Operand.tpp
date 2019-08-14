@@ -2,6 +2,7 @@
 # define OPERAND_TPP
 
 # include "Operands/IOperand.hpp"
+# include "Operands/OperandFactory.hpp"
 
 template <typename T>
 class Operand: public IOperand {
@@ -11,7 +12,7 @@ class Operand: public IOperand {
 // #############################################################################
 // Coplien functions ###########################################################
 
-        Operand(T nb, std::string value, eOperandType type, int precision)
+        Operand(double nb, std::string value, eOperandType type, int precision)
             : p_nb(nb), p_value(value), p_type(type), p_precision(precision) {}
         Operand() = delete;
         Operand(const Operand &src)
@@ -38,40 +39,59 @@ class Operand: public IOperand {
 // Operator Overloads ##########################################################
 
         IOperand const *operator+( IOperand const & rhs ) const {
-            Operand<T> *res = new Operand<T>(*this);
+            eOperandType type_cast = this->p_type >= rhs.getType() ? this->p_type : rhs.getType();
+            double rhs_val = std::stof(rhs.toString());
+            OperandFactory fact;
+
             // TODO: handle over/underflows
-            res->p_nb += dynamic_cast<const Operand<T> &>(rhs).p_nb;
-            res->p_value = std::to_string(res->p_nb);
-            return (res);
+            double nb = this->p_nb + rhs_val;
+            auto ope_res = fact.createOperand(type_cast, std::to_string(nb));
+            return (ope_res);
         } // Sum
         IOperand const *operator-( IOperand const & rhs ) const {
-            Operand<T> *res = new Operand<T>(*this);
+            eOperandType type_cast = this->p_type >= rhs.getType() ? this->p_type : rhs.getType();
+            double rhs_val = std::stof(rhs.toString());
+            OperandFactory fact;
+
             // TODO: handle over/underflows
-            res->p_nb -= dynamic_cast<const Operand<T> &>(rhs).p_nb;
-            res->p_value = std::to_string(res->p_nb);
-            return (static_cast<IOperand *>(res));
+            double nb = this->p_nb - rhs_val;
+            std::string value = std::to_string(nb);
+            auto ope_res = fact.createOperand(type_cast, std::to_string(nb));
+            return (ope_res);
         } // Difference
         IOperand const *operator*( IOperand const & rhs ) const {
-            Operand<T> *res = new Operand<T>(*this);
+            eOperandType type_cast = this->p_type >= rhs.getType() ? this->p_type : rhs.getType();
+            double rhs_val = std::stof(rhs.toString());
+            OperandFactory fact;
+
             // TODO: handle over/underflows
-            res->p_nb *= dynamic_cast<const Operand<T> &>(rhs).p_nb;
-            res->p_value = std::to_string(res->p_nb);
-            return (static_cast<IOperand *>(res));
+            double nb = this->p_nb * rhs_val;
+            std::string value = std::to_string(nb);
+            auto ope_res = fact.createOperand(type_cast, std::to_string(nb));
+            return (ope_res);
         } // Product
         IOperand const *operator/( IOperand const & rhs ) const {
-            Operand<T> *res = new Operand<T>(*this);
-            // TODO: handle over/underflows
-            res->p_nb /= dynamic_cast<const Operand<T> &>(rhs).p_nb;
-            res->p_value = std::to_string(res->p_nb);
-            return (static_cast<IOperand *>(res));
-        } // Quotient
-        // template <typename T>
-        // IOperand const *operator%( IOperand const & rhs ) const {
-        //     return ( this->mod(dynamic_cast<const Operand<T> &>(rhs)) );
-        // }
-        IOperand const *operator%( IOperand const & rhs ) const;
+            eOperandType type_cast = this->p_type >= rhs.getType() ? this->p_type : rhs.getType();
+            double rhs_val = std::stof(rhs.toString());
+            OperandFactory fact;
 
-        // IOperand const *mod( Operand<T> const & rhs ) const;
+            // TODO: handle over/underflows
+            double nb = this->p_nb / rhs_val;
+            std::string value = std::to_string(nb);
+            auto ope_res = fact.createOperand(type_cast, std::to_string(nb));
+            return (ope_res);
+        } // Quotient
+        IOperand const *operator%( IOperand const & rhs ) const {
+            eOperandType type_cast = this->p_type >= rhs.getType() ? this->p_type : rhs.getType();
+            double rhs_val = std::stod(rhs.toString());
+            OperandFactory fact;
+            
+            // TODO: handle over/underflows
+            auto nb = std::fmod(this->p_nb, rhs_val);
+            std::string value = std::to_string(nb);
+            auto ope_res = fact.createOperand(type_cast, std::to_string(nb));
+            return (ope_res);
+        } // Mod
 
 
 // #############################################################################
@@ -83,10 +103,10 @@ class Operand: public IOperand {
 // #############################################################################
 // Overflow/Underflow ##########################################################
 
-        T getNb(void);
+        double getNb(void);
 
     private:
-        T               p_nb;
+        double          p_nb;
         std::string     p_value;
         eOperandType    p_type;
         int             p_precision;

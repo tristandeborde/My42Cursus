@@ -1,7 +1,6 @@
 #ifndef OPERANDFACTORY_HPP
 # define OPERANDFACTORY_HPP
 
-# include "Operands/Operand.tpp"
 # include "Operands/IOperand.hpp"
 # include <iostream>
 
@@ -10,8 +9,8 @@ class OperandFactory {
         typedef IOperand const*(OperandFactory::* t_builder)(std::string const &value) const;
 
         OperandFactory(void);
-        OperandFactory(const OperandFactory &) = delete;
-        OperandFactory &operator=(const OperandFactory &) = delete;
+        OperandFactory(const OperandFactory &) = default;
+        OperandFactory &operator=(const OperandFactory &) = default;
         ~OperandFactory(void);
         IOperand const* createOperand( eOperandType type, std::string const& value ) const;
 

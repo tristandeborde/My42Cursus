@@ -1,4 +1,5 @@
 #include "Operands/OperandFactory.hpp"
+#include "Operands/Operand.tpp"
 
 OperandFactory::OperandFactory(void) {
     return;

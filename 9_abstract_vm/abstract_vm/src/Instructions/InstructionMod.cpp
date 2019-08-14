@@ -22,7 +22,7 @@ void InstructionMod::run(std::vector<IOperand const *> &pile) const {
 	pile.pop_back();
 	if (op2->toString() == "0" || op2->toString() == "0f")
 		throw std::exception();
-	IOperand const *op3 = (*op1) % (*op2);
+	IOperand const *op3 = (*op2) % (*op1);
 	pile.push_back(op3);
 	return;
 }
