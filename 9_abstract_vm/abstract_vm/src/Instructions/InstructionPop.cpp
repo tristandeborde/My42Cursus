@@ -13,6 +13,7 @@ bool InstructionPop::check() {
 }
 
 void InstructionPop::run(std::vector<IOperand const *> &pile) const {
-	if (pile.size() > 0)
-		pile.pop_back();
+	if (pile.size() <= 0)
+		throw std::exception();
+	pile.pop_back();
 }

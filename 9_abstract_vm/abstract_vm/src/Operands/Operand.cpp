@@ -35,10 +35,7 @@ void Operand<int>::checkUnderflow(int var)
 // #############################################################################
 // Getters/Setters #############################################################
 
-template <typename T>
-double Operand<T>::getNb(void) {
-    return this->p_nb;
-}
+
 
 template class Operand<char>;
 template class Operand<short>;

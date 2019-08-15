@@ -12,8 +12,13 @@ class Operand: public IOperand {
 // #############################################################################
 // Coplien functions ###########################################################
 
-        Operand(double nb, std::string value, eOperandType type, int precision)
-            : p_nb(nb), p_value(value), p_type(type), p_precision(precision) {}
+        Operand(T nb, eOperandType type, int precision)
+            : p_nb(nb), p_type(type), p_precision(precision) {
+                std::string value = std::to_string(nb);
+                if (type >= eOperandType::Float)
+                    value.erase(value.find_last_not_of('0') + 1, std::string::npos);
+                this->p_value = value;
+            }
         Operand() = delete;
         Operand(const Operand &src)
             : p_nb(src.p_nb), p_value(src.p_value), p_type(src.p_type), p_precision(src.p_precision) {}
@@ -31,9 +36,14 @@ class Operand: public IOperand {
             return (p_type);
         } // Type of the instance
 
+        double getNb(void) {
+            return this->p_nb;
+        }
+
         std::string const & toString(void) const {
-            return (p_value);
+            return (this->p_value);
         }// String representation of the instance
+
 
 // #############################################################################
 // Operator Overloads ##########################################################
@@ -45,7 +55,8 @@ class Operand: public IOperand {
 
             // TODO: handle over/underflows
             double nb = this->p_nb + rhs_val;
-            auto ope_res = fact.createOperand(type_cast, std::to_string(nb));
+            std::string val = std::to_string(nb);
+            auto ope_res = fact.createOperand(type_cast, val);
             return (ope_res);
         } // Sum
         IOperand const *operator-( IOperand const & rhs ) const {
@@ -55,8 +66,8 @@ class Operand: public IOperand {
 
             // TODO: handle over/underflows
             double nb = this->p_nb - rhs_val;
-            std::string value = std::to_string(nb);
-            auto ope_res = fact.createOperand(type_cast, std::to_string(nb));
+            std::string val = std::to_string(nb);
+            auto ope_res = fact.createOperand(type_cast, val);
             return (ope_res);
         } // Difference
         IOperand const *operator*( IOperand const & rhs ) const {
@@ -66,8 +77,8 @@ class Operand: public IOperand {
 
             // TODO: handle over/underflows
             double nb = this->p_nb * rhs_val;
-            std::string value = std::to_string(nb);
-            auto ope_res = fact.createOperand(type_cast, std::to_string(nb));
+            std::string val = std::to_string(nb);
+            auto ope_res = fact.createOperand(type_cast, val);
             return (ope_res);
         } // Product
         IOperand const *operator/( IOperand const & rhs ) const {
@@ -77,8 +88,8 @@ class Operand: public IOperand {
 
             // TODO: handle over/underflows
             double nb = this->p_nb / rhs_val;
-            std::string value = std::to_string(nb);
-            auto ope_res = fact.createOperand(type_cast, std::to_string(nb));
+            std::string val = std::to_string(nb);
+            auto ope_res = fact.createOperand(type_cast, val);
             return (ope_res);
         } // Quotient
         IOperand const *operator%( IOperand const & rhs ) const {
@@ -88,8 +99,8 @@ class Operand: public IOperand {
             
             // TODO: handle over/underflows
             auto nb = std::fmod(this->p_nb, rhs_val);
-            std::string value = std::to_string(nb);
-            auto ope_res = fact.createOperand(type_cast, std::to_string(nb));
+            std::string val = std::to_string(nb);
+            auto ope_res = fact.createOperand(type_cast, val);
             return (ope_res);
         } // Mod
 
@@ -99,11 +110,6 @@ class Operand: public IOperand {
 
         void checkOverflow(T var);
         void checkUnderflow(T var);
-
-// #############################################################################
-// Overflow/Underflow ##########################################################
-
-        double getNb(void);
 
     private:
         double          p_nb;

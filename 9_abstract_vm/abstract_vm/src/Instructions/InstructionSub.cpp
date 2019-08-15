@@ -21,7 +21,7 @@ void InstructionSub::run(std::vector<IOperand const *> &pile) const {
 	IOperand const *op2 = pile.back();
 	pile.pop_back();
 
-	IOperand const *op3 = (*op1) - (*op2);
+	IOperand const *op3 = (*op2) - (*op1);
 	pile.push_back(op3);
 	return;
 }

@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/avm",
-            "args": ["test/valid/mod_basics_1.asm"],
+            "args": ["test/exceptions/3_pop_empty_stack_1.asm"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
