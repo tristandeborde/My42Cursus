@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/avm",
-            "args": ["test/valid/mod_hard.asm"],
+            "args": ["test/exceptions/3_assert_type_1.asm"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

@@ -2,7 +2,6 @@
 #include "Operands/Operand.tpp"
 #include "Exceptions/Exceptions.hpp"
 #include <limits.h>
-#include <cfenv>
 
 OperandFactory::OperandFactory(void) {
     return;
@@ -13,25 +12,25 @@ OperandFactory::~OperandFactory(void) {
 }
 
 IOperand const* OperandFactory::createInt8( std::string const& value ) const {
-    double nb = std::stoi(const_cast<std::string &>(value));
+    int nb = std::stoi(const_cast<std::string &>(value));
     // TODO Overflow / underflow
-    if (nb > std::pow(2, 7) || nb < - std::pow(2, 7))
+    if (nb > std::pow(2, 7) - 1 || nb < - std::pow(2, 7))
         throw overflowException(0);
     Operand<char> *ope = new Operand<char>(nb, eOperandType::Int8, 0);
     return ope;
 }
 
 IOperand const* OperandFactory::createInt16( std::string const& value ) const {
-    double nb = std::stoi(const_cast<std::string &>(value));
+    int nb = std::stoi(const_cast<std::string &>(value));
     // TODO Overflow / underflow
-    if (nb > std::pow(2, 15) || nb < - std::pow(2, 15))
+    if (nb > std::pow(2, 15) - 1 || nb < - std::pow(2, 15))
         throw overflowException(0);
     Operand<short> *ope = new Operand<short>(nb, eOperandType::Int16, 0);
     return ope;
 }
 
 IOperand const* OperandFactory::createInt32( std::string const& value ) const {
-    double nb = std::stoi(const_cast<std::string &>(value));
+    long nb = std::stol(const_cast<std::string &>(value));
     // TODO Overflow / underflow
     if (nb > INT_MAX || nb < INT_MIN)
         throw overflowException(0);
