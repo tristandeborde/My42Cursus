@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/avm",
-            "args": ["test/exceptions/4_int8_overflow_down.asm"],
+            "args": ["test/valid/mod_hard.asm"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

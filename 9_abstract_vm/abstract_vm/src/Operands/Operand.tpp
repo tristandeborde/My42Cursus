@@ -3,6 +3,8 @@
 
 # include "Operands/IOperand.hpp"
 # include "Operands/OperandFactory.hpp"
+# include "Exceptions/Exceptions.hpp"
+# include <cfenv>
 
 template <typename T>
 class Operand: public IOperand {
@@ -50,44 +52,64 @@ class Operand: public IOperand {
 
         IOperand const *operator+( IOperand const & rhs ) const {
             eOperandType type_cast = this->p_type >= rhs.getType() ? this->p_type : rhs.getType();
-            double rhs_val = std::stof(rhs.toString());
+            double rhs_val = std::stod(rhs.toString());
             OperandFactory fact;
 
-            // TODO: handle over/underflows
+            // Handle over/underflows
+            std::feclearexcept(FE_ALL_EXCEPT);
             double nb = this->p_nb + rhs_val;
+            if ((bool)std::fetestexcept(FE_OVERFLOW))
+                throw overflowException(0);
+            if ((bool)std::fetestexcept(FE_UNDERFLOW))
+                throw underflowException(0);
             std::string val = std::to_string(nb);
             auto ope_res = fact.createOperand(type_cast, val);
             return (ope_res);
         } // Sum
         IOperand const *operator-( IOperand const & rhs ) const {
             eOperandType type_cast = this->p_type >= rhs.getType() ? this->p_type : rhs.getType();
-            double rhs_val = std::stof(rhs.toString());
+            double rhs_val = std::stod(rhs.toString());
             OperandFactory fact;
 
-            // TODO: handle over/underflows
+            // Handle over/underflows
+            std::feclearexcept(FE_ALL_EXCEPT);
             double nb = this->p_nb - rhs_val;
+            if ((bool)std::fetestexcept(FE_OVERFLOW))
+                throw overflowException(0);
+            if ((bool)std::fetestexcept(FE_UNDERFLOW))
+                throw underflowException(0);
             std::string val = std::to_string(nb);
             auto ope_res = fact.createOperand(type_cast, val);
             return (ope_res);
         } // Difference
         IOperand const *operator*( IOperand const & rhs ) const {
             eOperandType type_cast = this->p_type >= rhs.getType() ? this->p_type : rhs.getType();
-            double rhs_val = std::stof(rhs.toString());
+            double rhs_val = std::stod(rhs.toString());
             OperandFactory fact;
 
-            // TODO: handle over/underflows
+            // Handle over/underflows
+            std::feclearexcept(FE_ALL_EXCEPT);
             double nb = this->p_nb * rhs_val;
+            if ((bool)std::fetestexcept(FE_OVERFLOW))
+                throw overflowException(0);
+            if ((bool)std::fetestexcept(FE_UNDERFLOW))
+                throw underflowException(0);
             std::string val = std::to_string(nb);
             auto ope_res = fact.createOperand(type_cast, val);
             return (ope_res);
         } // Product
         IOperand const *operator/( IOperand const & rhs ) const {
             eOperandType type_cast = this->p_type >= rhs.getType() ? this->p_type : rhs.getType();
-            double rhs_val = std::stof(rhs.toString());
+            double rhs_val = std::stod(rhs.toString());
             OperandFactory fact;
 
-            // TODO: handle over/underflows
+            // Handle over/underflows
+            std::feclearexcept(FE_ALL_EXCEPT);
             double nb = this->p_nb / rhs_val;
+            if ((bool)std::fetestexcept(FE_OVERFLOW))
+                throw overflowException(0);
+            if ((bool)std::fetestexcept(FE_UNDERFLOW))
+                throw underflowException(0);
             std::string val = std::to_string(nb);
             auto ope_res = fact.createOperand(type_cast, val);
             return (ope_res);
@@ -97,8 +119,13 @@ class Operand: public IOperand {
             double rhs_val = std::stod(rhs.toString());
             OperandFactory fact;
             
-            // TODO: handle over/underflows
+            // Handle over/underflows
+            std::feclearexcept(FE_ALL_EXCEPT);
             auto nb = std::fmod(this->p_nb, rhs_val);
+            if ((bool)std::fetestexcept(FE_OVERFLOW))
+                throw overflowException(0);
+            if ((bool)std::fetestexcept(FE_UNDERFLOW))
+                throw underflowException(0);
             std::string val = std::to_string(nb);
             auto ope_res = fact.createOperand(type_cast, val);
             return (ope_res);

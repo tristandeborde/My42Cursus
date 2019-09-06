@@ -46,6 +46,13 @@ class overflowException: public LexerParserException
         virtual ~overflowException(void);
 };
 
+class underflowException: public LexerParserException
+{
+    public:
+        underflowException(int line_nb);
+        virtual ~underflowException(void);
+};
+
 class forbiddenTokenException: public LexerParserException
 {
     public:
@@ -65,6 +72,12 @@ class misplacedExitException: public LexerParserException
     public:
         misplacedExitException(int line_nb);
         virtual ~misplacedExitException(void);
+};
+
+class assertException: public std::exception
+{
+    public:
+        const char* what() const throw();
 };
 
 class GenericException: public std::exception

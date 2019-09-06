@@ -1,5 +1,12 @@
 #include "Exceptions.hpp"
 
+
+const char* assertException::what() const throw()
+{
+    std::string statement = "RUNTIME ERROR - assert is not true.";
+    return statement.c_str();
+}
+
 const char* LexerParserException::what() const throw()
 {
     std::string statement = "Line ";
@@ -47,7 +54,13 @@ invalidNumberException::invalidNumberException(int line_nb):
 }
 
 overflowException::overflowException(int line_nb):
-    LexerParserException(line_nb, "PARSER ERROR - argument is not a valid number.")
+    LexerParserException(line_nb, "PARSER ERROR - overflow.")
+{
+    return;
+}
+
+underflowException::underflowException(int line_nb):
+    LexerParserException(line_nb, "PARSER ERROR - underflow.")
 {
     return;
 }
@@ -80,6 +93,11 @@ invalidNumberException::~invalidNumberException(void)
 }
 
 overflowException::~overflowException(void)
+{
+    return;
+}
+
+underflowException::~underflowException(void)
 {
     return;
 }

@@ -40,21 +40,27 @@ IOperand const* OperandFactory::createInt32( std::string const& value ) const {
 }
 
 IOperand const* OperandFactory::createFloat( std::string const& value ) const {
-    std::feclearexcept(FE_OVERFLOW);
-    float nb = std::stof(const_cast<std::string &>(value));
-    // TODO Overflow / underflow
-    if ((bool)std::fetestexcept(FE_OVERFLOW))
+    float nb = 0;
+
+    try {
+        nb = std::stof(const_cast<std::string &>(value));
+    }
+    catch (const std::out_of_range& e) {
         throw overflowException(0);
+    }
     Operand<float> *ope = new Operand<float>(nb, eOperandType::Float, 0);
     return ope;
 }
 
 IOperand const* OperandFactory::createDouble( std::string const& value ) const {
-    // TODO Overflow / underflow
-    std::feclearexcept(FE_OVERFLOW);
-    double nb = std::stof(const_cast<std::string &>(value));
-    if ((bool)std::fetestexcept(FE_OVERFLOW))
+    double nb = 0;
+
+    try {
+        nb = std::stod(const_cast<std::string &>(value));
+    }
+    catch (const std::out_of_range& e) {
         throw overflowException(0);
+    }
     Operand<double> *ope = new Operand<double>(nb, eOperandType::Double, 0);
     return ope;
 }
