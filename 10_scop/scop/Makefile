@@ -31,7 +31,8 @@ OBJ_NAME 	= $(SRC_NAME:.c=.o)
 OBJ = $(addprefix src/,$(OBJ_NAME))
 
 # Deps #
-DEPS = -Iinclude 
+DEPS = -I/Users/tdeborde/.brew/Cellar/glfw/3.3/include -Iinclude
+LIBS = -L/Users/tdeborde/.brew/Cellar/glfw/3.3/lib -lglfw
 
 # Rules #
 .PHONY: all, clean, fclean, re
@@ -40,7 +41,7 @@ DEPS = -Iinclude
 all:	$(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(FLAGS) $(LFLAGS) $(OBJ) -o $(NAME) -lglfw -framework OpenGL
+	$(CC) $(FLAGS) $(LFLAGS) $(OBJ) -o $(NAME) $(LIBS)
 
 $(OBJ): %.o : %.c
 	$(CC) $(FLAGS) $(DEPS) -c $< -o $@
