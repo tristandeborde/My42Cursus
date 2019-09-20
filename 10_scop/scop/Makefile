@@ -6,7 +6,7 @@
 #    By: tdeborde <tdeborde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/16 16:42:31 by tdeborde          #+#    #+#              #
-#    Updated: 2019/07/23 17:46:52 by tdeborde         ###   ########.fr        #
+#    Updated: 2019/09/20 11:49:16 by tdeborde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,8 @@ OBJ_NAME 	= $(SRC_NAME:.c=.o)
 OBJ = $(addprefix src/,$(OBJ_NAME))
 
 # Deps #
-DEPS = -I/Users/tdeborde/.brew/Cellar/glfw/3.3/include -Iinclude
-LIBS = -L/Users/tdeborde/.brew/Cellar/glfw/3.3/lib -lglfw
+DEPS = -I/Users/tdeborde/.brew/Cellar/glfw/3.3/include -Iinclude -I/Users/tdeborde/.brew/Cellar/cglm/0.6.0/include
+LIBS = -L/Users/tdeborde/.brew/Cellar/glfw/3.3/lib -L/Users/tdeborde/.brew/Cellar/cglm/0.6.0/lib -lglfw
 
 # Rules #
 .PHONY: all, clean, fclean, re
