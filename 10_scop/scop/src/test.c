@@ -6,7 +6,7 @@
 /*   By: tdeborde <tdeborde@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/07 17:27:08 by tdeborde          #+#    #+#             */
-/*   Updated: 2019/09/20 11:59:25 by tdeborde         ###   ########.fr       */
+/*   Updated: 2019/09/23 17:53:27 by tdeborde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ const char *vertexShaderSource = "#version 330 core\n"
     "{\n"
     "   gl_Position = transform * vec4(aPos, 1.0);\n"
 	"	ourColor = aColor;\n"
-	"	TexCoords = vec2(aTexCoord.x, aTexCoord.y);;\n"
+	"	TexCoords = vec2(aTexCoords.x, aTexCoords.y);;\n"
     "}\0";
 const char *fragmentShaderSource = "#version 330 core\n"
     "out vec4 FragColor;\n"
@@ -134,6 +134,7 @@ int main(void) {
 	glGenVertexArrays(1, &VAO);  
 	glGenBuffers(1, &EBO);
 	glGenBuffers(1, &VBO);
+
 	// ..:: Initialization code :: ..
 	// 1. bind Vertex Array Object
 	glBindVertexArray(VAO);
@@ -186,8 +187,10 @@ int main(void) {
 	
 	while(!glfwWindowShouldClose(window))
 	{
+        // input
 		processInput(window);
 
+        // render
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
@@ -196,27 +199,29 @@ int main(void) {
 
 		// Move vertices
 		// TODO: Replace with custom matrix operations
-		mat4 m = GLM_MAT4_IDENTITY_INIT;
-		glm_mat4_mul(m, m, m);
-		glm::mat4 trans = glm::mat4(1.0f);
-		trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
-		trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));  
+		mat4 transform = GLM_MAT4_IDENTITY_INIT;
+		vec3 v1 = {0.0f, 0.0f, 1.0f};
+		glm_rotate(transform, (float)glfwGetTime(), v1);
+		vec3 v2 = {0.5f, 0.5f, 0.5f};
+		glm_scale(transform, v2);
 
 		// Pass transformation mat
-		unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+		glUseProgram(shaderProgram);
+		unsigned int transformLoc = glGetUniformLocation(shaderProgram, "transform");
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, (float *)transform);
 
         // render container
-		glUseProgram(shaderProgram);
         glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
+        // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		glfwSwapBuffers(window);
 		glfwPollEvents();    
 	}
 
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &EBO);
 
 	glfwTerminate();	
 	return (0);
