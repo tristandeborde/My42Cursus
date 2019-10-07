@@ -39,7 +39,7 @@ _Create a C++ lexer, parser and compiler for a simple stack programming language
 [_repo_](https://github.com/tristandeborde/My42Cursus/tree/master/10_scop)</br>
 _Parse .obj files to render 3d objects with custom textures and rotate them_
 
-11. **[WIP] Nibbler:**
+11. **Nibbler:**
 [_repo_](https://github.com/tristandeborde/My42Cursus/tree/master/11_nibbler)</br>
 _C++ implementation of Snake with a custom ECS engine. The graphics library can be changed at runtime !_
 
