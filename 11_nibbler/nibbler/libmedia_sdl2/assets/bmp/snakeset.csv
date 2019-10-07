@@ -1,0 +1,13 @@
+name,x,y,size
+all,3,2,0
+bush,0,0,1
+snake_se,1,0,1
+snake_we,2,0,1
+snake_sw,3,0,1
+grass,0,1,1
+snake_ns,1,1,1
+snake_ne,2,1,1
+snake_nw,3,1,1
+snake_tail,0,2,1
+snake_head,1,2,1
+fruit,3,2,1

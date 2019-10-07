@@ -1,0 +1,74 @@
+language: cpp
+compiler: clang
+git:
+  depth: false
+  gitsubmodules: false
+
+stages:
+  - Base
+  - Lint
+
+matrix:
+  include:
+    - name: verifying travis.yml file
+      stage: Base
+      os: linux
+      dist: xenial
+      script:
+        -  python3 .travis_gen.py > expected.out 
+        -  diff .travis.yml expected.out 
+    - name: compile bombler - Linux
+      stage: Base
+      os: linux
+      dist: xenial
+      install:
+        - sudo apt update 
+        - sudo apt-get install -y --no-install-recommends libsdl2-dev libsdl2-ttf-dev libglm-dev libglew-dev libassimp-dev libsdl2-image-dev libglfw3-dev 
+      script:
+        -  make re 
+    - name: compile bombler - OSX
+      stage: Base
+      os: osx
+      osx_image: xcode9.4
+      install:
+        - brew install SDL2 SDL2_ttf glm glew glfw assimp sdl2_image
+      script:
+        -  make re 
+    - name: uncrustify
+      stage: Lint
+      os: linux
+      dist: xenial
+      script:
+        -  make -f lint.mk uncrustify_check 
+    - name: cpplint
+      stage: Lint
+      os: linux
+      dist: xenial
+      install:
+        - sudo apt update 
+        - sudo apt-get install -y --no-install-recommends python3-venv 
+      script:
+        -  make -f lint.mk cpplint 
+    - name: cppcheck
+      stage: Lint
+      os: linux
+      dist: xenial
+      install:
+        - sudo apt update 
+        - sudo apt-get install -y --no-install-recommends cppcheck 
+      script:
+        -  make -f lint.mk cppcheck 
+    - name: clang-tidy
+      stage: Lint
+      os: linux
+      dist: xenial
+      before_install:
+        - docker build -t cpp .
+        - docker run --rm --detach --volume `pwd`:/code --workdir /code --name cpp cpp tail -f /dev/null
+      install:
+        - docker exec -t cpp bash -c " apt update "
+        - docker exec -t cpp bash -c " apt-get install -y --no-install-recommends clang-tidy-6.0 clang-6.0 libsdl2-dev libsdl2-ttf-dev libglm-dev libglew-dev libassimp-dev libsdl2-image-dev libglfw3-dev "
+      script:
+        - docker exec -t cpp bash -c " make -f lint.mk clang_tidy "
+      after_script:
+        - docker stop cpp
