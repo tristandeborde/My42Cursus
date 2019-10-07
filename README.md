@@ -33,7 +33,11 @@ _C re-implementation of malloc(), free() and realloc()_
 
 9. **Abstract_VM:**
 [_repo_](https://github.com/tristandeborde/My42Cursus/tree/master/9_abstract_vm)</br>
-_Create a C++ lexer, parser and compiler for a simple programmation language_
+_Create a C++ lexer, parser and compiler for a simple stack programming language_
+
+10. **[WIP] Scop:**
+[_repo_](https://github.com/tristandeborde/My42Cursus/tree/master/10_scop)</br>
+_Parse .obj files to render 3d objects with custom textures and rotate them_
 
 ## Piscines
 A Piscine is an intensive, weeks-long coding challenge during which students discover a new programming language. 
