@@ -16,4 +16,4 @@ First, you have to  `make -j`; a game window will pop-up.
 This was a group project; contributors can be found here: github.com/{fauconfan,blefeuvr,talasta,julienhache}
 
 ### Bonus
-The project is called Bombler because we are working on developing a Bomberman emulator on the same engine. This part is still a work in progress.
+We are also working on completing another 42 school project, whose goal is to create a Bomberman emulator called "Bombler". This part is still a work in progress, for which we plan to use the same game engine as a bonus.
