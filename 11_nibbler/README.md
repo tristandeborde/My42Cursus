@@ -8,7 +8,7 @@ The goal of the project is to code a working copy of the Snake video game. There
 
 ## Usage
 
-First, you have to  `make -j`; a game window will pop-up.
+First, you have to  `make -j`. Once compiled, run `./bombler` to launch the game.
 - You can change the library by pressing one of the `123` keys.
 - You can move the snake around with the arrow keys.
 
