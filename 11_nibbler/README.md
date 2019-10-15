@@ -1,4 +1,4 @@
-# LEM_IN
+# NIBBLER
 
 **Learning goals:** ECS game architecture, dynamic libraries, name-mangling & "extern" keyword.
 
