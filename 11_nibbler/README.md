@@ -4,7 +4,7 @@
 
 **Intro: ** The goal of the project is to code a working copy of the Snake video game. There's a twist: the user must be able to change the graphics library at runtime, by pressing a keyboard key.
 
-![Game demo](nibbler.gif)
+<p align="center"><img src="https://media.giphy.com/media/LQiRjiZjUC6b02NaMW/giphy.gif" width="50%" height="50%"></p>
 
 ## Usage
 
