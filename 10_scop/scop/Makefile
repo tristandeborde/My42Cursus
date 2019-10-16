@@ -5,56 +5,83 @@
 #                                                     +:+ +:+         +:+      #
 #    By: tdeborde <tdeborde@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/04/16 16:42:31 by tdeborde          #+#    #+#              #
-#    Updated: 2019/09/20 11:49:16 by tdeborde         ###   ########.fr        #
+#    Created: 2019/09/25 17:14:19 by cmaxime           #+#    #+#              #
+#    Updated: 2019/09/26 13:51:04 by tdeborde         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+NAME = scop
 
-NAME  = scop
+BREW_PATH = $(HOME)/.brew
+BASEPATH = $(CURDIR)
 
-# Compiler #
-CC    = gcc
+include colors.mk
+include files.mk
 
-# Flags #
-FLAGS = -g -Wall -Wextra -Werror
+SRC_FILES = $(addprefix src/,$(SRC))
 
-# Sources #
-SRC_NAME	= 	test.c \
-				glad.c
+OBJ := $(subst src,.obj,$(subst .c,.o,$(SRC_FILES)))
 
+CXX := gcc
+CXXINCLUDE := -I include -I libft/include
+CXXFLAGS := -g -Wall -Wextra -Werror # -Weverything
+CXXIGNORE := -Wno-unreachable-code-return -Wno-unused-function \
+			-Wno-reserved-id-macro -Wno-unused-parameter
+CXX_FLAGS_DEPS := -MD
 
-SRC = $(addprefix src/,$(SRC_NAME))
+ifeq ($(shell [ -d $(BREW_PATH) ]; echo $$?), 0) 
+    CXXINCLUDE += -isystem $(BREW_PATH)/include
+endif
 
-# Objects #
-OBJ_NAME 	= $(SRC_NAME:.c=.o)
-OBJ = $(addprefix src/,$(OBJ_NAME))
+CXXSRC := $(CXXINCLUDE) $(CXXFLAGS) $(CXXIGNORE) $(CXX_FLAGS_DEPS) -D BASEPATH=\"$(BASEPATH)\"
 
-# Deps #
-DEPS = -I/Users/tdeborde/.brew/Cellar/glfw/3.3/include -Iinclude -I/Users/tdeborde/.brew/Cellar/cglm/0.6.0/include
-LIBS = -L/Users/tdeborde/.brew/Cellar/glfw/3.3/lib -L/Users/tdeborde/.brew/Cellar/cglm/0.6.0/lib -lglfw
+LIB := -L libft -lft
+LIB += -lm
+ifeq ($(shell [ -d $(BREW_PATH) ]; echo $$?), 0) 
+	LIB += -L $(BREW_PATH)/lib
+endif
+LIB += -lglfw
 
-# Rules #
-.PHONY: all, clean, fclean, re
-.SUFFIXES:
+# LIB := $(LIB) -lmlx -framework OpenGL -framework AppKit
 
-all:	$(NAME)
+all : $(NAME)
 
-$(NAME): $(OBJ)
-	$(CC) $(FLAGS) $(LFLAGS) $(OBJ) -o $(NAME) $(LIBS)
+$(NAME): .obj $(OBJ)
+	@$(MAKE) libft
+	@$(MAKE) compile
 
-$(OBJ): %.o : %.c
-	$(CC) $(FLAGS) $(DEPS) -c $< -o $@
+compile: .obj $(OBJ)
+	@$(CXX) $(OBJ) -o $(NAME) $(LIB) -D BASEPATH=\"$(BASEPATH)\"
+	@echo "$(BOLD)[ $(NAME) ] compiled$(NORMAL)"
+
+libft:
+	@$(MAKE) -C libft
+
+.obj:
+	@mkdir .obj
+
+.obj/%.o: src/%.c
+	@printf "\\t%sCC%s\\t" "$(_GREEN)" "$(_END)"
+	@$(CXX) -o $@ $(CXXSRC) -c $<
+	@printf "%s\\n" "$<"
+
+#add dependencies files (*.d)
+DEP_FILES = $(SRC:%.c=%.d)
+-include $(DEP_FILES)
 
 clean:
-	rm -f $(OBJ)
+	@$(MAKE) clean -C libft
+	@rm -rf .obj
+	@printf "%s clean\\n" "$(NAME)"
 
 fclean: clean
-	rm -f $(NAME)
+	@$(MAKE) fclean -C libft
+	@rm -f $(NAME)
+	@printf "%s fclean\\n" "$(NAME)"
 
-re:
-	$(MAKE) fclean
-	$(MAKE) all
+re: 
+	@$(MAKE) fclean 
+	@$(MAKE) all
 
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re libft compile

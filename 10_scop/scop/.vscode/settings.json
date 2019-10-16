@@ -1,6 +1,10 @@
 {
     "files.associations": {
-        "glfw3.h": "c",
-        "unistd.h": "c"
+        "*.tpp": "cpp",
+        "scop.h": "c",
+        "math.h": "c",
+        "complex": "c",
+        "scop_math.h": "c",
+        "fcntl.h": "c"
     }
 }
