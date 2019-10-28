@@ -12,12 +12,16 @@ public:
 
 	IInstruction(eTokenType);
 	virtual ~IInstruction(void) {};
+	IInstruction(void) = delete;
+	IInstruction(const IInstruction &) = delete;
+	const IInstruction & operator=(const IInstruction &) = delete;
 
 	virtual bool check() = 0;
 	virtual void run(std::vector<IOperand const *> &pile) const = 0;
 
 protected:
 	eTokenType p_type;
+
 };
 
 #endif

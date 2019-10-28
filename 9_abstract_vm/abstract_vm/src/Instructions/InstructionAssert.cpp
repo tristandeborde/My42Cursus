@@ -20,10 +20,8 @@ bool InstructionAssert::check(void) {
 void InstructionAssert::run(std::vector<IOperand const *> &pile) const {
 	double nb_lhs = std::stod(this->p_operand->toString());
 	double nb_rhs = std::stod(pile.back()->toString());
+
 	if (nb_lhs != nb_rhs)
-	{
-		std::cout << "Argument is not equal to the value on top of stack." << std::endl;
 		throw assertException();
-	}
 	return;
 }

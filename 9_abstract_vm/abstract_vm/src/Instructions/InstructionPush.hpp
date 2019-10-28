@@ -10,6 +10,8 @@ public:
 
 	InstructionPush();
 	~InstructionPush(void);
+	InstructionPush(const InstructionPush &) = delete;
+	InstructionPush &operator=(const InstructionPush &) = delete;
 
 	bool check();
 	virtual void run(std::vector<IOperand const *> &pile) const;

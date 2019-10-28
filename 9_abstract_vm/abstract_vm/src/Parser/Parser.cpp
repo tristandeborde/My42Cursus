@@ -34,6 +34,7 @@ void 	Parser::addOperand(t_tokens_it it)
 	eTokenType 	type = it->getType();
 	std::string nb = this->getNumber(it);
 
+	// std::cout << nb << std::endl;
 	// Check if token is operand -> attach to prev Instr
 	eOperandType type_conv = static_cast<eOperandType>(static_cast<int>(type) - 11);
 

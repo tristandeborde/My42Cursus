@@ -9,11 +9,11 @@ public:
 
 	InstructionDiv(void);
 	~InstructionDiv(void);
+	InstructionDiv(const InstructionDiv &) = delete;
+	InstructionDiv &operator=(const InstructionDiv &) = delete;
 
 	bool check();
 	void run(std::vector<IOperand const *> &pile) const;
-
-private:
 
 };
 

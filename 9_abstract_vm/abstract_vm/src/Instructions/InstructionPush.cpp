@@ -19,6 +19,5 @@ bool InstructionPush::check() {
 }
 
 void InstructionPush::run(std::vector<IOperand const *> &pile) const {
-	std::cout << "Push" << '\n';
 	pile.push_back(this->p_operand);
 }

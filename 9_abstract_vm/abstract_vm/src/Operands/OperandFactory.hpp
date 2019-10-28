@@ -9,8 +9,8 @@ class OperandFactory {
         typedef IOperand const*(OperandFactory::* t_builder)(std::string const &value) const;
 
         OperandFactory(void);
-        OperandFactory(const OperandFactory &) = default;
-        OperandFactory &operator=(const OperandFactory &) = default;
+        OperandFactory(const OperandFactory &) = delete;
+        OperandFactory &operator=(const OperandFactory &) = delete;
         ~OperandFactory(void);
         IOperand const* createOperand( eOperandType type, std::string const& value ) const;
 

@@ -11,15 +11,16 @@ class AVMInput {
 public:
 	AVMInput(int ac, char const **av);
 	virtual ~AVMInput(void);
+	AVMInput() = delete;
+	AVMInput(const AVMInput &) = delete;
+	AVMInput & operator=(const AVMInput &) = delete;
+	
 	std::string	getContent();
 	void 		readStd();
 	void 		readFile(char const **av);
 	void 		printUsage(void);
 
 private:
-	AVMInput();
-	AVMInput(const AVMInput &);
-	AVMInput & operator=(const AVMInput &);
 	std::string _content;
 };
 

@@ -30,7 +30,7 @@ Lexer::~Lexer(void)
 	return;
 }
 
-eTokenType	Lexer::findeTokenType(const std::string &token_str)
+eTokenType	Lexer::findTokenType(const std::string &token_str)
 {
 	// Token is valid (instruction, parenthesis or number)
 	for (auto elem : this->p_valid_tokens)

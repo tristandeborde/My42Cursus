@@ -60,6 +60,7 @@ IOperand const* OperandFactory::createDouble( std::string const& value ) const {
     catch (const std::out_of_range& e) {
         throw overflowException(0);
     }
+    // std::cout << "Factory: " << nb << " string: " << value << std::endl;
     Operand<double> *ope = new Operand<double>(nb, eOperandType::Double, 0);
     return ope;
 }

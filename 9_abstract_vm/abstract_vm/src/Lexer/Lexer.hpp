@@ -21,8 +21,8 @@ public:
 	Lexer(const Lexer &) = delete;
 	Lexer & operator=(const Lexer &) = delete;
 
-	eTokenType				findeTokenType(const std::string &identifier);
-  Token 					checkToken(const std::string &identifier, int line_nb);
+	eTokenType					findTokenType(const std::string &identifier);
+	Token 						checkToken(const std::string &identifier, int line_nb);
 	void						pushToken(const std::string &identifier, int line_nb);
 	void						readLine(const std::string &line, int line_nb);
 	void 						lex(const std::string &lines);

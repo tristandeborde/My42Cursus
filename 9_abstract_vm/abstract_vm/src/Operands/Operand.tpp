@@ -5,6 +5,8 @@
 # include "Operands/OperandFactory.hpp"
 # include "Exceptions/Exceptions.hpp"
 # include <cfenv>
+# include <sstream>
+# include <iomanip>
 
 template <typename T>
 class Operand: public IOperand {
@@ -16,9 +18,16 @@ class Operand: public IOperand {
 
         Operand(T nb, eOperandType type, int precision)
             : p_nb(nb), p_type(type), p_precision(precision) {
-                std::string value = std::to_string(nb);
-                if (type >= eOperandType::Float)
+                std::string value;
+                std::ostringstream tmp;
+                if (type >= eOperandType::Float) {
+                    tmp.precision(std::numeric_limits<T>::digits10 + 1);
+                    tmp << std::fixed << nb;
+                    value = tmp.str();
                     value.erase(value.find_last_not_of('0') + 1, std::string::npos);
+                }
+                else
+                    value = std::to_string(nb);
                 this->p_value = value;
             }
         Operand() = delete;
@@ -62,8 +71,15 @@ class Operand: public IOperand {
                 throw overflowException(0);
             if ((bool)std::fetestexcept(FE_UNDERFLOW))
                 throw underflowException(0);
-            std::string val = std::to_string(nb);
-            auto ope_res = fact.createOperand(type_cast, val);
+
+            // Store new string repr
+            std::ostringstream tmp;
+            std::string value;
+            tmp << std::fixed;
+            tmp << std::setprecision(std::numeric_limits<T>::digits10 + 1) << nb;
+            value = tmp.str();
+
+            auto ope_res = fact.createOperand(type_cast, value);
             return (ope_res);
         } // Sum
         IOperand const *operator-( IOperand const & rhs ) const {
@@ -78,8 +94,15 @@ class Operand: public IOperand {
                 throw overflowException(0);
             if ((bool)std::fetestexcept(FE_UNDERFLOW))
                 throw underflowException(0);
-            std::string val = std::to_string(nb);
-            auto ope_res = fact.createOperand(type_cast, val);
+
+            // Store new string repr
+            std::ostringstream tmp;
+            std::string value;
+            tmp << std::fixed;
+            tmp << std::setprecision(std::numeric_limits<T>::digits10 + 1) << nb;
+            value = tmp.str();
+
+            auto ope_res = fact.createOperand(type_cast, value);
             return (ope_res);
         } // Difference
         IOperand const *operator*( IOperand const & rhs ) const {
@@ -94,8 +117,15 @@ class Operand: public IOperand {
                 throw overflowException(0);
             if ((bool)std::fetestexcept(FE_UNDERFLOW))
                 throw underflowException(0);
-            std::string val = std::to_string(nb);
-            auto ope_res = fact.createOperand(type_cast, val);
+
+            // Store new string repr
+            std::ostringstream tmp;
+            std::string value;
+            tmp << std::fixed;
+            tmp << std::setprecision(std::numeric_limits<T>::digits10 + 1) << nb;
+            value = tmp.str();
+
+            auto ope_res = fact.createOperand(type_cast, value);
             return (ope_res);
         } // Product
         IOperand const *operator/( IOperand const & rhs ) const {
@@ -110,8 +140,16 @@ class Operand: public IOperand {
                 throw overflowException(0);
             if ((bool)std::fetestexcept(FE_UNDERFLOW))
                 throw underflowException(0);
-            std::string val = std::to_string(nb);
-            auto ope_res = fact.createOperand(type_cast, val);
+
+            std::cout << "DEBUG: " << nb << std::endl;
+            // Store new string repr
+            std::ostringstream tmp;
+            std::string value;
+            tmp << std::fixed;
+            tmp << std::setprecision(std::numeric_limits<T>::digits10 + 1) << nb;
+            value = tmp.str();
+
+            auto ope_res = fact.createOperand(type_cast, value);
             return (ope_res);
         } // Quotient
         IOperand const *operator%( IOperand const & rhs ) const {
@@ -126,8 +164,15 @@ class Operand: public IOperand {
                 throw overflowException(0);
             if ((bool)std::fetestexcept(FE_UNDERFLOW))
                 throw underflowException(0);
-            std::string val = std::to_string(nb);
-            auto ope_res = fact.createOperand(type_cast, val);
+            
+            // Store new string repr
+            std::ostringstream tmp;
+            std::string value;
+            tmp << std::fixed;
+            tmp << std::setprecision(std::numeric_limits<T>::digits10 + 1) << nb;
+            value = tmp.str();
+
+            auto ope_res = fact.createOperand(type_cast, value);
             return (ope_res);
         } // Mod
 

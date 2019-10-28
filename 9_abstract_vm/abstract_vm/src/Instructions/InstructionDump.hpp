@@ -10,12 +10,11 @@ public:
 
 	InstructionDump(void);
 	~InstructionDump(void);
+	InstructionDump(const InstructionDump &) = delete;
+	InstructionDump &operator=(const InstructionDump &) = delete;
 
 	bool check();
 	void run(std::vector<IOperand const *> &pile) const;
-
-private:
-
 };
 
 #endif

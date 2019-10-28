@@ -9,6 +9,8 @@ public:
 
 	InstructionPop(void);
 	~InstructionPop(void);
+	InstructionPop(const InstructionPop &) = delete;
+	InstructionPop &operator=(const InstructionPop &) = delete;
 
 	bool check();
 	void run(std::vector<IOperand const *> &pile) const;

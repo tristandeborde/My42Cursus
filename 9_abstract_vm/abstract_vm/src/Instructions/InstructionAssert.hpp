@@ -10,6 +10,8 @@ public:
 
 	InstructionAssert(void);
 	~InstructionAssert(void);
+	InstructionAssert(const InstructionAssert &) = delete;
+	InstructionAssert &operator=(const InstructionAssert &) = delete;
 
 	bool check();
 	void run(std::vector<IOperand const *> &pile) const;
