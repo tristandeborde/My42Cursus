@@ -17,7 +17,7 @@ NAME  = avm
 CC    = g++
 
 # Flags #
-FLAGS = -std=c++11 -g -Wall -Wextra -Werror
+FLAGS = -std=c++11 -Wall -Wextra -Werror
 
 # Sources #
 SRC_NAME	= 	Lexer/AVMInput.cpp \
@@ -38,7 +38,6 @@ SRC_NAME	= 	Lexer/AVMInput.cpp \
 				Instructions/InstructionSub.cpp \
 				Instructions/InstructionFactory.cpp \
 				Operands/OperandFactory.cpp \
-				Operands/Operand.cpp \
 				Parser/Parser.cpp \
 				Processor/Processor.cpp \
 				main.cpp

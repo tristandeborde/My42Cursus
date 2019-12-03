@@ -15,7 +15,6 @@ public:
 	bool check();
 	void run(std::vector<IOperand const *> &pile) const;
 
-private:
 };
 
 #endif

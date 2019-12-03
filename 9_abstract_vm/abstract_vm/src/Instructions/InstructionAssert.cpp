@@ -6,6 +6,7 @@ InstructionAssert::InstructionAssert(void)
 }
 
 InstructionAssert::~InstructionAssert(void) {
+	delete this->p_operand;
 	return;
 }
 
@@ -19,9 +20,11 @@ bool InstructionAssert::check(void) {
 
 void InstructionAssert::run(std::vector<IOperand const *> &pile) const {
 	double nb_lhs = std::stod(this->p_operand->toString());
+	if (!pile.size())
+		throw pileEmptyException("Assert");
 	double nb_rhs = std::stod(pile.back()->toString());
 
-	if (nb_lhs != nb_rhs)
+	if (nb_lhs != nb_rhs || (this->p_operand->getType() != pile.back()->getType()))
 		throw assertException();
 	return;
 }

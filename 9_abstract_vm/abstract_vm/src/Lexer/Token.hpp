@@ -10,6 +10,7 @@ class Token {
 public:
 	virtual ~Token(void);
 	Token(std::string token, eTokenType id, int line_nb);
+	Token() = delete;
 	Token(const Token &);
 	Token & operator=(const Token &) = delete;
 

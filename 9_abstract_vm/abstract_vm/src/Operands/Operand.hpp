@@ -20,14 +20,13 @@ class Operand: public IOperand {
             : p_nb(nb), p_type(type), p_precision(precision) {
                 std::string value;
                 std::ostringstream tmp;
+                value = std::to_string(nb);
                 if (type >= eOperandType::Float) {
-                    tmp.precision(std::numeric_limits<T>::digits10 + 1);
+                    tmp.precision(std::numeric_limits<T>::digits10 + 3);
                     tmp << std::fixed << nb;
                     value = tmp.str();
                     value.erase(value.find_last_not_of('0') + 1, std::string::npos);
                 }
-                else
-                    value = std::to_string(nb);
                 this->p_value = value;
             }
         Operand() = delete;
@@ -46,10 +45,6 @@ class Operand: public IOperand {
         eOperandType  getType(void) const {
             return (p_type);
         } // Type of the instance
-
-        double getNb(void) {
-            return this->p_nb;
-        }
 
         std::string const & toString(void) const {
             return (this->p_value);
@@ -141,7 +136,6 @@ class Operand: public IOperand {
             if ((bool)std::fetestexcept(FE_UNDERFLOW))
                 throw underflowException(0);
 
-            std::cout << "DEBUG: " << nb << std::endl;
             // Store new string repr
             std::ostringstream tmp;
             std::string value;
@@ -175,13 +169,6 @@ class Operand: public IOperand {
             auto ope_res = fact.createOperand(type_cast, value);
             return (ope_res);
         } // Mod
-
-
-// #############################################################################
-// Overflow/Underflow ##########################################################
-
-        void checkOverflow(T var);
-        void checkUnderflow(T var);
 
     private:
         double          p_nb;

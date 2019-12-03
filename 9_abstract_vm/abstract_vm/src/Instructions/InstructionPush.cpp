@@ -6,8 +6,8 @@ InstructionPush::InstructionPush(void)
 }
 
 InstructionPush::~InstructionPush(void) {
+	delete this->p_operand;
 	return;
-
 }
 
 void InstructionPush::setOperand(IOperand const *operand) {

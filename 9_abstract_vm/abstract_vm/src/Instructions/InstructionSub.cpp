@@ -14,7 +14,7 @@ bool InstructionSub::check() {
 
 void InstructionSub::run(std::vector<IOperand const *> &pile) const {
 	if (pile.size() < 2)
-		throw std::exception();
+		throw pileSizeException("Sub", 2);
 
 	IOperand const *op1 = pile.back();
 	pile.pop_back();

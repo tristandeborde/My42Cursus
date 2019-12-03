@@ -16,12 +16,14 @@ public:
 	AVMInput & operator=(const AVMInput &) = delete;
 	
 	std::string	getContent();
+	void		read();
 	void 		readStd();
 	void 		readFile(char const **av);
-	void 		printUsage(void);
 
 private:
 	std::string _content;
+	int				_ac;
+	const char**	_av;
 };
 
 #endif

@@ -28,6 +28,7 @@ enum class eTokenType {
 
 enum class eExceptionType {
     missingNumberException = 0,
+    missingInstructionException,
     forbiddenTokenException,
     noExitException,
     misplacedExitException,

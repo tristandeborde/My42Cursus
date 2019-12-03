@@ -33,7 +33,7 @@ private:
 
 	std::vector<std::pair<std::regex, eTokenType>> 	p_valid_tokens;
 	std::vector<std::string>						p_exceptions;
-  std::vector<Token>           				p_tokens;
+  	std::vector<Token>           					p_tokens;
 };
 
 #endif

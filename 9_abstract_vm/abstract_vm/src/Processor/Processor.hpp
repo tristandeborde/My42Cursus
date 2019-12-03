@@ -15,7 +15,7 @@ public:
 	Processor(const Processor &) = delete;
 	Processor & operator=(const Processor &) = delete;
 
-	void 	run(std::vector<IInstruction *> const &instructions);
+	bool 	run(std::vector<IInstruction *> const &instructions);
 
 private:
 	std::vector<IOperand const *> p_pile;

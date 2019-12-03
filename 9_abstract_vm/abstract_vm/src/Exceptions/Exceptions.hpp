@@ -1,120 +1,193 @@
 #ifndef EXCEPTIONS_HPP
 # define EXCEPTIONS_HPP
 
-#include <string>
-#include "Lexer/eTokenType.hpp"
+# include <string>
+# include "Lexer/eTokenType.hpp"
 
-class LexerParserException: public std::exception
+class InputException: public std::exception
 {
     public:
         const char* what() const throw();
 
-        LexerParserException(int line_nb, std::string err_msg);
-        LexerParserException() = delete;
-        virtual ~LexerParserException(void) {} ;
-        LexerParserException & operator=(const LexerParserException &) = delete;
-        LexerParserException(const LexerParserException &);
+        InputException(std::string err_msg);
+        InputException() = delete;
+        virtual ~InputException(void) {} ;
+        InputException & operator=(const InputException &) = delete;
+        InputException(const InputException &) = default;
+
+    private:
+        std::string p_error_msg;
+};
+
+class noFileException: public InputException
+{
+    public:
+        noFileException();
+        noFileException & operator=(const noFileException &) = delete;
+        noFileException(const noFileException &) = default;
+        virtual ~noFileException(void);
+};
+
+class badUsageException: public InputException
+{
+    public:
+        badUsageException();
+        badUsageException & operator=(const badUsageException &) = delete;
+        badUsageException(const badUsageException &) = default;
+        virtual ~badUsageException(void);
+};
+
+
+class AVMException: public std::exception
+{
+    public:
+        const char* what() const throw();
+
+        AVMException(int line_nb, std::string err_msg);
+        AVMException() = delete;
+        virtual ~AVMException(void) {} ;
+        AVMException & operator=(const AVMException &) = delete;
+        AVMException(const AVMException &) = default;
     private:
         int         p_line_nb;
         std::string p_error_msg;
 };
 
-class badSyntaxException: public LexerParserException
+class assertException: public AVMException
 {
     public:
-        badSyntaxException(int line_nb);
+        assertException();
+        assertException & operator=(const assertException &) = delete;
+        assertException(const assertException &) = default;
+        virtual ~assertException(void);
+};
+
+class printTypeException: public AVMException
+{
+    public:
+        printTypeException();
+        printTypeException & operator=(const printTypeException &) = delete;
+        printTypeException(const printTypeException &) = default;
+        virtual ~printTypeException(void);
+};
+
+class pileSizeException: public AVMException
+{
+    public:
+        pileSizeException(std::string ope_name, int req_size);
+        pileSizeException() = delete;
+        pileSizeException & operator=(const pileSizeException &) = delete;
+        pileSizeException(const pileSizeException &) = default;
+        virtual ~pileSizeException(void);
+};
+
+class pileEmptyException: public AVMException
+{
+    public:
+        pileEmptyException(std::string ope_name);
+        pileEmptyException() = delete;
+        pileEmptyException & operator=(const pileEmptyException &) = delete;
+        pileEmptyException(const pileEmptyException &) = default;
+        virtual ~pileEmptyException(void);
+};
+
+class nullDenominator: public AVMException
+{
+    public:
+        nullDenominator();
+        nullDenominator & operator=(const nullDenominator &) = delete;
+        nullDenominator(const nullDenominator &) = default;
+        virtual ~nullDenominator(void);
+};
+
+class badSyntaxException: public AVMException
+{
+    public:
+        badSyntaxException(int line_nb, const std::string &badToken);
         badSyntaxException() = delete;
         badSyntaxException & operator=(const badSyntaxException &) = delete;
-        badSyntaxException(const badSyntaxException &); 
+        badSyntaxException(const badSyntaxException &) = default; 
         virtual ~badSyntaxException(void);
 };
 
-class invalidNumberException: public LexerParserException
+class invalidNumberException: public AVMException
 {
     public:
-        invalidNumberException(int line_nb);
+        invalidNumberException(int line_nb, const std::string &token);
         invalidNumberException() = delete;
         invalidNumberException & operator=(const invalidNumberException &) = delete;
-        invalidNumberException(const invalidNumberException &); 
+        invalidNumberException(const invalidNumberException &) = default; 
         virtual ~invalidNumberException(void);
 };
 
-class missingNumberException: public LexerParserException
+class missingNumberException: public AVMException
 {
     public:
         missingNumberException(int line_nb);
         missingNumberException() = delete;
         missingNumberException & operator=(const missingNumberException &) = delete;
-        missingNumberException(const missingNumberException &); 
+        missingNumberException(const missingNumberException &) = default; 
         virtual ~missingNumberException(void);
 };
 
-class overflowException: public LexerParserException
+class missingInstructionException: public AVMException
+{
+    public:
+        missingInstructionException(int line_nb);
+        missingInstructionException() = delete;
+        missingInstructionException & operator=(const missingInstructionException &) = delete;
+        missingInstructionException(const missingInstructionException &) = default; 
+        virtual ~missingInstructionException(void);
+};
+
+class overflowException: public AVMException
 {
     public:
         overflowException(int line_nb);
         overflowException() = delete;
         overflowException & operator=(const overflowException &) = delete;
-        overflowException(const overflowException &); 
+        overflowException(const overflowException &) = default; 
         virtual ~overflowException(void);
 };
 
-class underflowException: public LexerParserException
+class underflowException: public AVMException
 {
     public:
         underflowException(int line_nb);
         underflowException() = delete;
         underflowException & operator=(const underflowException &) = delete;
-        underflowException(const underflowException &);
+        underflowException(const underflowException &) = default;
         virtual ~underflowException(void);
 };
 
-class forbiddenTokenException: public LexerParserException
+class forbiddenTokenException: public AVMException
 {
     public:
         forbiddenTokenException(int line_nb);
         forbiddenTokenException() = delete;
         forbiddenTokenException & operator=(const forbiddenTokenException &) = delete;
-        forbiddenTokenException(const forbiddenTokenException &);
+        forbiddenTokenException(const forbiddenTokenException &) = default;
         virtual ~forbiddenTokenException(void);
 };
 
-class noExitException: public LexerParserException
+class noExitException: public AVMException
 {
     public:
         noExitException(int line_nb);
         noExitException() = delete;
         noExitException & operator=(const noExitException &) = delete;
-        noExitException(const noExitException &);
+        noExitException(const noExitException &) = default;
         virtual ~noExitException(void);
 };
 
-class misplacedExitException: public LexerParserException
+class misplacedExitException: public AVMException
 {
     public:
         misplacedExitException(int line_nb);
         misplacedExitException() = delete;
         misplacedExitException & operator=(const misplacedExitException &) = delete;
-        misplacedExitException(const misplacedExitException &);
+        misplacedExitException(const misplacedExitException &) = default;
         virtual ~misplacedExitException(void);
-};
-
-class assertException: public std::exception
-{
-    public:
-        assertException(void) = default;
-        assertException & operator=(const assertException &) = delete;
-        assertException(const assertException &);
-        const char* what() const throw();
-};
-
-class GenericException: public std::exception
-{
-    public:
-        GenericException(void) = default;
-        GenericException & operator=(const GenericException &) = delete;
-        GenericException(const GenericException &);
-        virtual const char * what() const throw();
 };
 
 class ExceptionFactory
@@ -125,13 +198,14 @@ class ExceptionFactory
         ExceptionFactory(const ExceptionFactory &) = delete;
         ExceptionFactory & operator=(const ExceptionFactory &) = delete;
 
-        typedef LexerParserException (ExceptionFactory::*t_builder)(int line_nb) const;
+        typedef AVMException (ExceptionFactory::*t_builder)(int line_nb) const;
         
-        LexerParserException createMissingNumber(int line_nb) const;
-        LexerParserException createForbiddenInstruction(int line_nb) const;
-        LexerParserException createNoExit(int line_nb) const;
-        LexerParserException createMisplacedExit(int line_nb) const;
-        LexerParserException create(eExceptionType type, int line_nb) const;
+        AVMException createMissingNumber(int line_nb) const;
+        AVMException createMissingInstruction(int line_nb) const;
+        AVMException createForbiddenInstruction(int line_nb) const;
+        AVMException createNoExit(int line_nb) const;
+        AVMException createMisplacedExit(int line_nb) const;
+        AVMException create(eExceptionType type, int line_nb) const;
 };
 
 

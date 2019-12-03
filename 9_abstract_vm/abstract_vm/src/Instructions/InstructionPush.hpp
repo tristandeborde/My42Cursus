@@ -2,7 +2,7 @@
 # define INSTRUCTIONPUSH_HPP
 
 # include "Instructions/IInstruction.hpp"
-# include "Operands/Operand.tpp"
+# include "Operands/Operand.hpp"
 
 class InstructionPush: public IInstruction {
 

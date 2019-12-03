@@ -7,14 +7,19 @@ Parser::Parser(const Lexer &src)
 }
 
 Parser::~Parser(void) {
+	for (auto elem : this->p_instructions) {
+		delete elem;
+	}
 	return;
 }
 
-void	Parser::printExceptions(const std::vector<std::string> &exceptions)
+bool	Parser::printExceptions(const std::vector<std::string> &exceptions)
 {
+	if (!exceptions.size())
+		return true;
 	for (auto elem : exceptions)
-		std::cout << elem << std::endl;
-	throw (GenericException());
+		std::cout << elem;
+	return false;
 }
 
 std::string 	Parser::getNumber(t_tokens_it it)
@@ -22,9 +27,9 @@ std::string 	Parser::getNumber(t_tokens_it it)
 	std::smatch nb;
 	std::string token_str = (*it).getToken();
 
-	if (!std::regex_search(token_str, nb, std::regex("\\(([-+]?\\d*\\.?\\d*)\\)"))
+	if (!std::regex_search(token_str, nb, std::regex("\\(([-]?\\d*\\.?\\d*)\\)"))
 		|| !nb[1].str().size())
-		throw (invalidNumberException((*it).getLineNb()));
+		throw (invalidNumberException(it->getLineNb(), it->getToken()));
 
 	return nb[1].str();
 }
@@ -34,7 +39,6 @@ void 	Parser::addOperand(t_tokens_it it)
 	eTokenType 	type = it->getType();
 	std::string nb = this->getNumber(it);
 
-	// std::cout << nb << std::endl;
 	// Check if token is operand -> attach to prev Instr
 	eOperandType type_conv = static_cast<eOperandType>(static_cast<int>(type) - 11);
 
@@ -57,9 +61,9 @@ void 	Parser::addInstruction(eTokenType type)
 
 void 	Parser::lookBack(t_tokens_it it)
 {
-	// Only lookback case is for eof token which must be preceded by exit 
-	if (it != this->p_tokens.begin()
-		&& (it - 1)->getType() != eTokenType::exit)
+	// Only lookback case is for eof token which must be preceded by endl and then exit 
+	if ((it != this->p_tokens.begin() && (it - 1)->getType() != eTokenType::endl)
+		|| ((it - 1) != this->p_tokens.begin() && (it - 2)->getType() != eTokenType::exit))
 	throw (noExitException(it->getLineNb()));
 }
 
@@ -72,16 +76,16 @@ void 	Parser::lookAhead(t_tokens_it it)
 	auto valid_tokens = this->p_ope_seq[static_cast<size_t>(type_it)];
 	auto found_token = std::find(valid_tokens.begin(), valid_tokens.end(), next->getType());
 	if (found_token == valid_tokens.end())
-		throw ( this->p_ex_factory.create( this->p_ex_seq[static_cast<size_t>(type_it)], next->getLineNb() ) );
+		throw ( this->p_ex_factory.create( this->p_ex_seq[static_cast<size_t>(type_it)], it->getLineNb()) );
 
 	// Token is valid so convert it to Instruction or Operand
 	if (type_it <= eTokenType::print)
 		this->addInstruction(type_it);
-	else if (type_it <= eTokenType::dbl)
+	else if (type_it <= eTokenType::dbl && this->p_instructions.size())
 		this->addOperand(it);
 }
 
-void 	Parser::parse(void)
+bool 	Parser::parse(void)
 {
 	for (t_tokens_it it = this->p_tokens.begin(); it != this->p_tokens.end(); it++) {
 		try {
@@ -90,12 +94,11 @@ void 	Parser::parse(void)
 			else
 				this->lookBack(it);
 		}
-		catch (LexerParserException &e) {
+		catch (AVMException &e) {
 			this->p_exceptions.push_back(e.what());
 		}
 	}
-	if (this->p_exceptions.size())
-		this->printExceptions(this->p_exceptions);
+	return (this->printExceptions(this->p_exceptions));
 }
 
 std::vector<IInstruction *> const  &Parser::getInstructions(void) {
@@ -118,6 +121,7 @@ void	Parser::p_initSeq(void) {
 		eTokenType::div,
 		eTokenType::mod,
 		eTokenType::print,
+		eTokenType::eof,
 		eTokenType::int8,
 		eTokenType::int16,
 		eTokenType::int32,
@@ -125,31 +129,32 @@ void	Parser::p_initSeq(void) {
 		eTokenType::dbl,
 	};
 	std::vector<eTokenType> instr;
-	std::copy(all.begin(), all.begin() + 11, std::back_inserter(instr));
+	std::copy(all.begin(), all.begin() + 12, std::back_inserter(instr));
 	std::vector<eTokenType> ope;
 	std::copy(all.begin() + 11, all.end(), std::back_inserter(ope));
 
 	this->p_ope_seq = {{
-		{eTokenType::eof}, // exit
-		{instr},
+		{eTokenType::endl}, // exit
+		{eTokenType::endl},
 		{ope}, // push
-		{instr},
+		{eTokenType::endl},
 		{ope}, // assert
-		{instr},
-		{instr},
-		{instr},
-		{instr},
-		{instr},
-		{instr},
-		{instr},
-		{instr},
-		{instr},
-		{instr},
+		{eTokenType::endl},
+		{eTokenType::endl},
+		{eTokenType::endl},
+		{eTokenType::endl},
+		{eTokenType::endl},
+		{eTokenType::endl},
+		{eTokenType::endl},
+		{eTokenType::endl},
+		{eTokenType::endl},
+		{eTokenType::endl},
+		{eTokenType::endl},
 		{instr}
 	}};
 
 	this->p_ex_seq = {{
-		eExceptionType::misplacedExitException,
+		eExceptionType::forbiddenTokenException,
 		eExceptionType::forbiddenTokenException,
 		eExceptionType::missingNumberException,
 		eExceptionType::forbiddenTokenException,
@@ -164,31 +169,7 @@ void	Parser::p_initSeq(void) {
 		eExceptionType::forbiddenTokenException,
 		eExceptionType::forbiddenTokenException,
 		eExceptionType::forbiddenTokenException,
-		eExceptionType::forbiddenTokenException
+		eExceptionType::forbiddenTokenException,
+		eExceptionType::missingInstructionException
 	}};
 }
-
-
-// void 	Parser::checkSequence(t_tokens_it it, t_tokens_it end)
-// {
-// 	t_tokens_it next = it + 1;
-// 	eTokenType type = (*it).getType();
-
-// 	// TODO: Change ugly if forest into sequence parsing:
-// 	// 		check vector<eTokenType t> Tokens against vector<vector<eTokenType t>> Valid_Sequences
-
-// 	// IF INSTR == (Push || Assert) : Look ahead to check if next is number
-// 	if (type == eTokenType::push || type == eTokenType::assert) {
-// 		if (next == end || (*next).getType() < eTokenType::int8)
-// 			throw (missingNumberException((*it).getLineNb()));
-// 	}
-// 	// IF NB || INSTR != (Push || Assert) : Look ahead to check if \n
-// 	if (type != eTokenType::endl && type != eTokenType::push && type != eTokenType::assert) {
-// 		if (next == end || (*next).getType() != eTokenType::endl)
-// 			throw (forbiddenTokenException((*it).getLineNb()));
-// 	}
-// 	// IF LAST != exit
-// 	if (next->getType() == eTokenType::endl && (next + 1) == end && type != eTokenType::exit) {
-// 		throw (noExitException((*it).getLineNb()));
-// 	}
-// }

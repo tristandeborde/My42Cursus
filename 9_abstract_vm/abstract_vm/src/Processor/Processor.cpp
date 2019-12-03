@@ -8,8 +8,15 @@ Processor::~Processor(void) {
 	return;
 }
 
-void Processor::run(std::vector<IInstruction *> const &instructions) {
+bool Processor::run(std::vector<IInstruction *> const &instructions) {
 	for (auto elem : instructions) {
-		elem->run(this->p_pile);
+		try {
+			elem->run(this->p_pile);
+		}
+		catch (AVMException &e) {
+			std::cout << e.what();
+			return false;
+		}
 	}
+	return true;
 }

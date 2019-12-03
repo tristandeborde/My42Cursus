@@ -3,7 +3,7 @@
 
 # include <vector>
 # include <iostream>
-# include "Operands/Operand.tpp"
+# include "Operands/Operand.hpp"
 # include "Lexer/eTokenType.hpp"
 
 class IInstruction {

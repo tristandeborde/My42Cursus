@@ -1,17 +1,22 @@
 #include "AVMInput.hpp"
+#include "Exceptions/Exceptions.hpp"
 
-AVMInput::AVMInput(int ac, char const **av)
+AVMInput::AVMInput(int ac, char const **av): _ac(ac), _av(av)
 {
-	if (ac == 1)
-		this->readStd();
-	else if (ac == 2)
-		this->readFile(av);
-	else
-		this->printUsage();
 	return;
 }
 
 AVMInput::~AVMInput(void) {
+	return;
+}
+
+void		AVMInput::read() {
+	if (this->_ac == 1)
+		this->readStd();
+	else if (this->_ac == 2)
+		this->readFile(this->_av);
+	else
+		throw(badUsageException());
 	return;
 }
 
@@ -42,12 +47,7 @@ void		AVMInput::readFile(char const **av)
 		file.close();
 	}
 	else
-		std::cout << "Unable to open file";
-}
-
-void 		AVMInput::printUsage()
-{
-	this->_content = "usage: ./avm [./input_file]";
+		throw(noFileException());
 }
 
 std::string AVMInput::getContent(void)

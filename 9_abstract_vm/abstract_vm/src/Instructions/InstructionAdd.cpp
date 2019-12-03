@@ -14,11 +14,11 @@ bool InstructionAdd::check() {
 
 void InstructionAdd::run(std::vector<IOperand const *> &pile) const {
 	if (pile.size() < 2)
-		throw std::exception();
+		throw pileSizeException("Add", 2);
 
-	IOperand const *op1 = pile.front();
+	IOperand const *op1 = pile.back();
 	pile.pop_back();
-	IOperand const *op2 = pile.front();
+	IOperand const *op2 = pile.back();
 	pile.pop_back();
 
 	IOperand const *op3 = (*op1) + (*op2);
