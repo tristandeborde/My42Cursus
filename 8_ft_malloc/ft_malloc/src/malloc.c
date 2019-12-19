@@ -21,7 +21,7 @@ void		free(void *ptr)
 
 	pthread_mutex_lock(&g_mutex);
 	blk = NULL;
-	if (ptr != NULL && (blk = check_ptr(ptr)))
+	if (ptr != NULL && (blk = find_ptr(ptr)))
 		blk->is_free = 1;
 	pthread_mutex_unlock(&g_mutex);
 }
@@ -44,25 +44,21 @@ void		*realloc(void *ptr, size_t size)
 	size_t	i;
 	t_blk	*blk;
 	void	*ptr2;
+	t_blk	*found;
 
 	pthread_mutex_lock(&g_mutex);
 	i = 0;
 	blk = NULL;
-	ptr2 = (!check_ptr(ptr) && ptr) ? NULL : malloc_engine(size);
-	if (ptr2 && ptr && check_ptr(ptr))
+	found = find_ptr(ptr);
+	ptr2 = (!found && ptr) ? NULL : malloc_engine(size);
+	if (ptr2 && ptr && found)
 	{
 		blk = (t_blk *)(ptr - sizeof(t_blk));
 		blk->is_free = 1;
 		if (change_size(blk, ptr2, size))
 			ptr2 = ptr;
 		else
-		{
-			while (i < size && i < blk->size)
-			{
-				((char *)ptr2)[i] = ((char *)ptr)[i];
-				i++;
-			}
-		}
+			safe_memcpy(ptr, ptr2, size, blk->size);
 	}
 	pthread_mutex_unlock(&g_mutex);
 	return (ptr2);

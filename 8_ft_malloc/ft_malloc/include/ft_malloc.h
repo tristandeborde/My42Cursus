@@ -47,6 +47,8 @@ t_blk			*alloc_blk(size_t size);
 void			*handle_zones(size_t real_size, size_t size, int id);
 void			ft_putunbr(size_t n);
 void			ft_puthex(uintptr_t nb);
-t_blk			*check_ptr(void *ptr);
+t_blk			*find_ptr(void *ptr);
+int				print_blk_mem(t_blk *blk);
+void			safe_memcpy(void *src, void *dest, size_t size1, size_t size2);
 
 #endif

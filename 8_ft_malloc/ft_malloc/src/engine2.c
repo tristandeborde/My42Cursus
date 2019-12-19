@@ -42,9 +42,9 @@ int		change_size(t_blk *blk, void *ptr2, size_t size)
 
 	blk_len = 0;
 	blk2 = NULL;
-	if (blk->size < TINY_SIZE)
+	if (blk->size <= TINY_SIZE)
 		blk_len = TINY_SIZE;
-	else if (blk->size < MEDIUM_SIZE)
+	else if (blk->size <= MEDIUM_SIZE)
 		blk_len = MEDIUM_SIZE;
 	else
 		blk_len = blk->size;
@@ -74,5 +74,17 @@ void	handle_large(t_blk *blk)
 		while (iter->next != NULL)
 			iter = iter->next;
 		iter->next = blk;
+	}
+}
+
+void	safe_memcpy(void *src, void *dest, size_t size1, size_t size2)
+{
+	size_t		i;
+
+	i = 0;
+	while (i < size1 && i < size2)
+	{
+		((char *)dest)[i] = ((char *)src)[i];
+		i++;
 	}
 }

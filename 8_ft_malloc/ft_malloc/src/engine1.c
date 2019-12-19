@@ -12,7 +12,7 @@
 
 #include "ft_malloc.h"
 
-t_blk		*check_ptr(void *ptr)
+t_blk		*find_ptr(void *ptr)
 {
 	int		i;
 	void	*real_mem;
